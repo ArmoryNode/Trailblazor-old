@@ -4,12 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using Trailblazor.Server.Data;
 using Trailblazor.Server.Models;
 
+using static Trailblazor.Constants.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+{
+    options.UseSqlite(connectionString);
+});
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -19,7 +24,15 @@ builder.Services.AddIdentityServer()
     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
 builder.Services.AddAuthentication()
-    .AddIdentityServerJwt();
+    .AddIdentityServerJwt()
+    .AddGoogle(options =>
+    {
+        var authenticationSection = builder.Configuration.GetSection("Authentication")
+                                                         .GetSection(ExternalProviders.Google);
+        
+        options.ClientId = authenticationSection.GetSection(Sections.ClientId).Value;
+        options.ClientSecret = authenticationSection.GetSection(Sections.ClientSecret).Value;
+    });
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
