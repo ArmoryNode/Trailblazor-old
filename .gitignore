@@ -350,6 +350,8 @@ MigrationBackup/
 .ionide/
 
 ### JetBrains Rider ###
+.idea/
+
 # User specific
 **/.idea/**/workspace.xml
 **/.idea/**/tasks.xml
@@ -365,20 +367,18 @@ MigrationBackup/
 **/.idea/**/sqlDataSources.xml
 **/.idea/**/dynamic.xml
 
-# Rider
 # Rider auto-generates .iml files, and contentModel.xml
 **/.idea/**/*.iml
 **/.idea/**/contentModel.xml
 **/.idea/**/modules.xml
 
-*.suo
-*.user
-.vs/
-[Bb]in/
-[Oo]bj/
-_UpgradeReport_Files/
 [Pp]ackages/
 
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal

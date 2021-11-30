@@ -1,0 +1,110 @@
+﻿@import "../Styles/variables";
+
+$accent: $blue;
+
+$loader-width: 65px;
+$loader-height: 100px;
+$square-size: 25px;
+$animation-speed: 1.8s;
+
+.loader {
+  position: absolute;
+  width: $loader-width;
+  height: $loader-height;
+  left: calc(50% - #{$loader-width / 2});
+  top: calc(50% - #{$loader-height / 2});
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    width: $square-size;
+    height: $square-size;
+    background-color: $blue;
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+    animation: move-and-rotate-before $animation-speed ease infinite;
+  }
+
+  &::after {
+    bottom: 0;
+    right: 0;
+    animation: move-and-rotate-after $animation-speed ease infinite;
+  }
+
+  @keyframes move-and-rotate-before {
+    0% {
+      transform: translateX(0)
+      translateY(0)
+      rotate(0turn)
+      scale(1);
+    }
+
+    25% {
+      transform: translateX($loader-width - $square-size)
+      translateY(0)
+      rotate(-.50turn)
+      scale(.8);
+    }
+
+    50% {
+      transform: translateX($loader-width - $square-size)
+      translateY($loader-height - $square-size)
+      rotate(-1turn)
+      scale(1);
+    }
+
+    75% {
+      transform: translateX(0)
+      translateY($loader-height - $square-size)
+      rotate(-1.50turn)
+      scale(.8);
+    }
+
+    100% {
+      transform: translateX(0)
+      translateY(0)
+      rotate(-2turn)
+      scale(1);
+    }
+  }
+
+  @keyframes move-and-rotate-after {
+    0% {
+      transform: translateX(0)
+      translateY(0)
+      rotate(0turn)
+      scale(1);
+    }
+
+    25% {
+      transform: translateX(($loader-width - $square-size) * -1)
+      translateY(0)
+      rotate(-.50turn)
+      scale(.8);
+    }
+
+    50% {
+      transform: translateX(($loader-width - $square-size) * -1)
+      translateY(($loader-height - $square-size) * -1)
+      rotate(-1turn)
+      scale(1);
+    }
+
+    75% {
+      transform: translateX(0)
+      translateY(($loader-height - $square-size) * -1)
+      rotate(-1.5turn)
+      scale(.8);
+    }
+
+    100% {
+      transform: translateX(0)
+      translateY(0)
+      rotate(-2turn)
+      scale(1);
+    }
+  }
+}
