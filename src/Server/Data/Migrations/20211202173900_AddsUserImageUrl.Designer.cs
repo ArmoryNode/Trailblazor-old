@@ -12,8 +12,8 @@ using Trailblazor.Server.Data;
 namespace Trailblazor.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("00000000000000_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20211202173900_AddsUserImageUrl")]
+    partial class AddsUserImageUrl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -320,6 +320,10 @@ namespace Trailblazor.Server.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trailblazor.Server", "src\Server\Trailblazor.Server.csproj", "{888E4B77-22B5-477F-BCBD-3AAB2166BD3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trailblazor.Server", "src\Server\Trailblazor.Server.csproj", "{888E4B77-22B5-477F-BCBD-3AAB2166BD3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trailblazor.Client", "src\Client\Trailblazor.Client.csproj", "{98D7D50A-0009-47B0-A438-BBB0BA22C526}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trailblazor.Client", "src\Client\Trailblazor.Client.csproj", "{98D7D50A-0009-47B0-A438-BBB0BA22C526}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trailblazor.Shared", "src\Shared\Trailblazor.Shared.csproj", "{9C0EECD9-32E1-4E2A-A26B-C2EBA37254FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trailblazor.Shared", "src\Shared\Trailblazor.Shared.csproj", "{9C0EECD9-32E1-4E2A-A26B-C2EBA37254FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-body {
+﻿body {
   font-family: "Open Sans", sans-serif;
   background-color: #111315;
   color: #F2F2F2;
@@ -83,6 +83,7 @@ body {
 }
 #wrapper header#topbar {
   grid-area: topbar;
+  display: flex;
   background-color: #1A1D1F;
   border-left: 2px solid #111315;
   --shadow-color: $grey;
@@ -90,11 +91,9 @@ body {
 }
 #wrapper main#content {
   grid-area: content;
-  margin: 1.5rem;
+  margin: 2rem;
   border-radius: 15px;
 }
 #wrapper *, #wrapper *::before, #wrapper *::after {
   box-sizing: inherit;
 }
-
-/*# sourceMappingURL=MainLayout.razor.css.map */

@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Shared/AccountPartial.razor.css",
+    "inputFile": "Shared/AccountPartial.razor.scss"
+  },
+  {
+    "outputFile": "Shared/MainLayout.razor.css",
+    "inputFile": "Shared/MainLayout.razor.scss"
+  }
+]

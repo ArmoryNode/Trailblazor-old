@@ -2,12 +2,12 @@ using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using Trailblazor;
 using Trailblazor.Server.Data;
 using Trailblazor.Server.Models;
+using Trailblazor.Server.Infrastructure;
 
 using static Trailblazor.Constants.Authentication;
+using static Trailblazor.Shared.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,10 +19,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddClaimsPrincipalFactory<CustomClaimsPrincipalFactory>();
 
 builder.Services.AddIdentityServer()
-    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+        options.ApiResources.Single().UserClaims.Add(CustomClaimTypes.Image);
+        options.IdentityResources["openid"].UserClaims.Add(CustomClaimTypes.Image);
+    });
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt()
@@ -35,7 +40,9 @@ builder.Services.AddAuthentication()
         options.ClientSecret = authenticationSection.GetValue<string>(Sections.ClientSecret);
 
         // Map inbound user claims https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/additional-claims#map-user-data-keys-and-create-claims
-        options.ClaimActions.MapJsonKey(JwtClaimTypes.Picture, JwtClaimTypes.Picture, "url");
+        options.ClaimActions.MapJsonKey(CustomClaimTypes.Image, JwtClaimTypes.Picture, "url");
+
+        options.SaveTokens = true;
     });
 
 builder.Services.AddControllersWithViews();

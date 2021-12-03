@@ -1,0 +1,14 @@
+﻿@inject AuthenticationStateProvider authProvider
+
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authProvider.GetAuthenticationStateAsync();
+        if (authState != null)
+        {
+            var foo = authState.User.Claims.ToList();
+        }
+    }
+}

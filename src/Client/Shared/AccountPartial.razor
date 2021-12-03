@@ -1,0 +1,23 @@
+﻿@using Trailblazor.Shared
+@using System.Security.Claims
+
+@inject AuthenticationStateProvider AuthProvider;
+
+<div class="profile-container">
+    <img width="50" height="50" src="@UserImageUrl" />
+</div>
+
+@code {
+    public string UserImageUrl { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+
+        UserImageUrl = authState.User.Image();
+
+        StateHasChanged();
+
+        await base.OnInitializedAsync();
+    }
+}

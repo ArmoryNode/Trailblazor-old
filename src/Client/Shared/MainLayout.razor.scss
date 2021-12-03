@@ -1,0 +1,120 @@
+﻿@import "../Styles/all";
+
+$background-color: $black;
+$foreground-color: $dark-grey;
+$text-color: $off-white;
+ 
+body { 
+  font-family: "Open Sans", sans-serif;
+  background-color: $background-color; 
+  color: $text-color;
+} 
+ 
+#wrapper {
+  position: relative; 
+  height: 100vh;
+  box-sizing: border-box;
+
+  background-color: $background-color;
+  color: $text-color;
+  font-family: Roboto, sans-serif;
+
+  display: grid;
+  grid-template-areas:
+    'sidebar topbar'
+    'sidebar content';
+
+  grid-template-columns: 300px auto;
+  grid-template-rows: 100px auto;
+
+  nav#sidebar {
+    display: flex;
+    flex-flow: column nowrap;
+    grid-area: sidebar;
+    background-color: $foreground-color;
+    padding: 0 1rem;
+    @include medium-elevation;
+    
+    .site-title {
+      font-size: 34px;
+      align-self: center;
+      padding: 1em;
+    }
+    
+    ::deep > a.site-nav-link {
+      position: relative;
+      margin: 5px 10px;
+      padding: 12px 6px;
+      cursor: pointer;
+      font-size: 18px;
+      text-decoration: none;
+      color: $text-color;
+      border-radius: 5px;
+      
+      @include transition-for(all);
+
+      &::before {
+        //content: '';
+        position: absolute;
+        height: 100%;
+        width: 6px;
+        top: 0;
+        left: 0;
+        background-color: transparent;
+        border-radius: 4px;
+
+        @include transition-for(all);
+      }
+
+      &:hover:not(.active) {
+        background-color: lighten($foreground-color, 2);
+        
+        &::before {
+          background-color: rgba($text-color, .4);
+        }
+      } 
+
+      &.active, &:hover {
+        color: lighten($text-color, 10);
+        background-color: lighten($foreground-color, 6);
+      }
+
+      &.active::before {
+        background-color: $text-color;
+      }
+      
+      &.active {
+        @include low-elevation;
+      }
+
+      > i.fa-solid,
+      > i.fa-regular,
+      > i.fa-light,
+      > i.fa-duotone,
+      > i.fa-thin,
+      > i.fa-brands {
+        margin-left: .5em;
+        margin-right: 2em;
+      }
+    }
+  }
+
+  header#topbar {
+    grid-area: topbar;
+    display: flex;
+    background-color: $foreground-color;
+    border-left: 2px solid $background-color;
+
+    @include medium-elevation;
+  }
+  
+  main#content {
+    grid-area: content;
+    margin: 2rem;
+    border-radius: 15px;
+  }
+
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+}
