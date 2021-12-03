@@ -1,3 +1,30 @@
+﻿:root {
+  --red: #EA5030;
+  --orange: #E5691E;
+  --yellow: #F0AF2C;
+  --green: #1EB972;
+  --blue: #0190F8;
+  --purple: #836DCA;
+  --white: #FFFFFF;
+  --off-white: #F2F2F2;
+  --light-grey: #dadada;
+  --grey: #272B30;
+  --dark-grey: #1A1D1F;
+  --black: #111315;
+  --background-color: #111315;
+  --middleground-color: #1A1D1F;
+  --foreground-color: #272B30;
+  --text-color: #F2F2F2;
+  --transition-duration: 0.3s;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition-duration: 0s;
+}
+
 .loader {
   position: absolute;
   width: 65px;
@@ -56,5 +83,3 @@
     transform: translateX(0) translateY(0) rotate(-2turn) scale(1);
   }
 }
-
-/*# sourceMappingURL=Loader.razor.css.map */

@@ -31,10 +31,12 @@ body {
 
 // Loader
 
+$accent: $blue;
+
 $loader-width: 65px;
 $loader-height: 100px;
 $square-size: 25px;
-$animation-speed: 2s;
+$animation-speed: 1.8s;
 
 .loader {
     position: absolute;
