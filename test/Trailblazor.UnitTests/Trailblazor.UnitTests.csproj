@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Shared\Trailblazor.Shared.csproj" />
+    <ProjectReference Include="..\..\src\Shared\Trailblazor.Shared.csproj" />
   </ItemGroup>
 
 </Project>
