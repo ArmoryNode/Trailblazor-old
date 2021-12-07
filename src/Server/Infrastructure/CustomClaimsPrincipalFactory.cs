@@ -28,6 +28,26 @@ namespace Trailblazor.Server.Infrastructure
                 identity.AddClaim(new(CustomClaimTypes.Image, user.ImageUrl));
             }
 
+            if (!string.IsNullOrWhiteSpace(user.FirstName))
+            {
+                var firstNameClaim = identity.FindFirst(c => c.Type == ClaimTypes.GivenName);
+
+                if (firstNameClaim is not null)
+                    identity.RemoveClaim(firstNameClaim);
+
+                identity.AddClaim(new(CustomClaimTypes.FirstName, user.FirstName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(user.LastName))
+            {
+                var lastNameClaim = identity.FindFirst(c => c.Type == ClaimTypes.Surname);
+
+                if (lastNameClaim is not null)
+                    identity.RemoveClaim(lastNameClaim);
+
+                identity.AddClaim(new(CustomClaimTypes.LastName, user.LastName));
+            }
+
             return identity;
         }
     }

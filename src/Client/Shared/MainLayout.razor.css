@@ -12,79 +12,86 @@
   color: #F2F2F2;
   font-family: Roboto, sans-serif;
   display: grid;
-  grid-template-areas: "sidebar topbar" "sidebar content";
-  grid-template-columns: 300px auto;
+  grid-template-areas: "sidebar content" "sidebar content";
+  grid-template-columns: 280px auto;
   grid-template-rows: 100px auto;
 }
 #wrapper nav#sidebar {
   display: flex;
   flex-flow: column nowrap;
   grid-area: sidebar;
-  background-color: #1A1D1F;
+  background-color: #1A1C1E;
   padding: 0 1rem;
   --shadow-color: $grey;
   box-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color)/0.36), 0.8px 1.6px 2px -0.8px hsl(var(--shadow-color)/0.36), 2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color)/0.36), 5px 10px 12.6px -2.5px hsl(var(--shadow-color)/0.36);
 }
-#wrapper nav#sidebar .site-title {
+#wrapper nav#sidebar .site-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
   font-size: 34px;
-  align-self: center;
-  padding: 1em;
+  margin: 1em;
+  width: 65px;
+  height: 65px;
+  background-color: #272B30;
+  border-radius: 25%;
 }
-#wrapper nav#sidebar ::deep > a.site-nav-link {
+#wrapper nav#sidebar .category-title {
+  margin: 10px 20px;
+  color: #dadada;
+}
+#wrapper nav#sidebar ::deep .site-nav-link {
   position: relative;
   margin: 5px 10px;
-  padding: 12px 6px;
+  padding: 10px 6px;
   cursor: pointer;
   font-size: 18px;
+  text-align: left;
   text-decoration: none;
   color: #F2F2F2;
-  border-radius: 5px;
+  border-radius: 10px;
   transition-duration: 0.3s;
   transition-timing-function: ease;
   transition-property: all;
 }
-#wrapper nav#sidebar ::deep > a.site-nav-link::before {
-  position: absolute;
-  height: 100%;
-  width: 6px;
-  top: 0;
-  left: 0;
-  background-color: transparent;
-  border-radius: 4px;
-  transition-duration: 0.3s;
-  transition-timing-function: ease;
-  transition-property: all;
+#wrapper nav#sidebar ::deep .site-nav-link:hover:not(.active) {
+  background-color: #1f2123;
 }
-#wrapper nav#sidebar ::deep > a.site-nav-link:hover:not(.active) {
-  background-color: #1f2225;
-}
-#wrapper nav#sidebar ::deep > a.site-nav-link:hover:not(.active)::before {
+#wrapper nav#sidebar ::deep .site-nav-link:hover:not(.active)::before {
   background-color: rgba(242, 242, 242, 0.4);
 }
-#wrapper nav#sidebar ::deep > a.site-nav-link.active, #wrapper nav#sidebar ::deep > a.site-nav-link:hover {
+#wrapper nav#sidebar ::deep .site-nav-link.active, #wrapper nav#sidebar ::deep .site-nav-link:hover {
   color: white;
-  background-color: #282d30;
+  background-color: #282b2e;
 }
-#wrapper nav#sidebar ::deep > a.site-nav-link.active::before {
+#wrapper nav#sidebar ::deep .site-nav-link.active::before {
   background-color: #F2F2F2;
 }
-#wrapper nav#sidebar ::deep > a.site-nav-link.active {
+#wrapper nav#sidebar ::deep .site-nav-link.active {
   --shadow-color: $grey;
   box-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color)/0.34), 0.4px 0.8px 1px -1.2px hsl(var(--shadow-color)/0.34), 1px 2px 2.5px -2.5px hsl(var(--shadow-color)/0.34);
 }
-#wrapper nav#sidebar ::deep > a.site-nav-link > i.fa-solid,
-#wrapper nav#sidebar ::deep > a.site-nav-link > i.fa-regular,
-#wrapper nav#sidebar ::deep > a.site-nav-link > i.fa-light,
-#wrapper nav#sidebar ::deep > a.site-nav-link > i.fa-duotone,
-#wrapper nav#sidebar ::deep > a.site-nav-link > i.fa-thin,
-#wrapper nav#sidebar ::deep > a.site-nav-link > i.fa-brands {
+#wrapper nav#sidebar ::deep .site-nav-link > i.fa-solid,
+#wrapper nav#sidebar ::deep .site-nav-link > i.fa-regular,
+#wrapper nav#sidebar ::deep .site-nav-link > i.fa-light,
+#wrapper nav#sidebar ::deep .site-nav-link > i.fa-duotone,
+#wrapper nav#sidebar ::deep .site-nav-link > i.fa-thin,
+#wrapper nav#sidebar ::deep .site-nav-link > i.fa-brands {
   margin-left: 0.5em;
-  margin-right: 2em;
+  margin-right: 15px;
+}
+#wrapper nav#sidebar #sidebar-menu {
+  margin-top: auto;
+  margin-bottom: 1em;
+  display: flex;
+  flex-flow: column nowrap;
 }
 #wrapper header#topbar {
   grid-area: topbar;
+  position: relative;
   display: flex;
-  background-color: #1A1D1F;
+  background-color: #1A1C1E;
   border-left: 2px solid #111315;
   --shadow-color: $grey;
   box-shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color)/0.36), 0.8px 1.6px 2px -0.8px hsl(var(--shadow-color)/0.36), 2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color)/0.36), 5px 10px 12.6px -2.5px hsl(var(--shadow-color)/0.36);

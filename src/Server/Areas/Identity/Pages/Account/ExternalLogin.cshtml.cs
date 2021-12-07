@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Trailblazor.Server.Models;
 using static Trailblazor.Shared.Infrastructure.Authentication;
+using IdentityModel;
 
 namespace Trailblazor.Server.Areas.Identity.Pages.Account
 {
@@ -121,7 +122,7 @@ namespace Trailblazor.Server.Areas.Identity.Pages.Account
 
                 var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
 
-                await AddProfileImageUrl(user, info);
+                await UpdateUserProfile(user, info);
 
                 return LocalRedirect(returnUrl);
             }
@@ -227,17 +228,18 @@ namespace Trailblazor.Server.Areas.Identity.Pages.Account
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
-        private async Task AddProfileImageUrl(ApplicationUser user, ExternalLoginInfo info)
+        private Task UpdateUserProfile(ApplicationUser user, ExternalLoginInfo info)
         {
             if (info.Principal.HasClaim(c => c.Type == CustomClaimTypes.Image))
-            {
-                var imageUrl = info.Principal.FindFirstValue(CustomClaimTypes.Image);
-                await _userManager.AddClaimAsync(user, new(CustomClaimTypes.Image, imageUrl));
+                user.ImageUrl = info.Principal.FindFirstValue(CustomClaimTypes.Image);
 
-                user.ImageUrl = imageUrl;
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.GivenName))
+                user.FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
 
-                await _userManager.UpdateAsync(user);
-            }
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Surname))
+                user.LastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+
+            return _userManager.UpdateAsync(user);
         }
     }
 }

@@ -25,6 +25,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 builder.Services.AddIdentityServer()
     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+        // Configure user image claim and identity resource
         options.ApiResources.Single().UserClaims.Add(CustomClaimTypes.Image);
         options.IdentityResources["openid"].UserClaims.Add(CustomClaimTypes.Image);
     });
@@ -44,6 +45,9 @@ builder.Services.AddAuthentication()
 
         options.SaveTokens = true;
     });
+
+// Configure Trailblazor database settings
+builder.Services.Configure<TrailblazorDatabaseSettings>(builder.Configuration.GetSection(nameof(TrailblazorDatabaseSettings)));
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

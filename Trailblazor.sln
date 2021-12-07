@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trailblazor.Client", "src\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trailblazor.Shared", "src\Shared\Trailblazor.Shared.csproj", "{9C0EECD9-32E1-4E2A-A26B-C2EBA37254FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trailblazor.UnitTests", "Trailblazor.UnitTests\Trailblazor.UnitTests.csproj", "{7BE99A19-23F1-43F0-8286-3A1C5FCC9E4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9C0EECD9-32E1-4E2A-A26B-C2EBA37254FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0EECD9-32E1-4E2A-A26B-C2EBA37254FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0EECD9-32E1-4E2A-A26B-C2EBA37254FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BE99A19-23F1-43F0-8286-3A1C5FCC9E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BE99A19-23F1-43F0-8286-3A1C5FCC9E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BE99A19-23F1-43F0-8286-3A1C5FCC9E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BE99A19-23F1-43F0-8286-3A1C5FCC9E4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

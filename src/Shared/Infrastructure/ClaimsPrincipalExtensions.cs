@@ -1,6 +1,7 @@
 ﻿using IdentityModel;
 using System.ComponentModel;
 using System.Security.Claims;
+using static Trailblazor.Shared.Infrastructure.Authentication;
 
 #nullable disable
 
@@ -12,7 +13,16 @@ namespace Trailblazor.Shared
             => principal.GetUserId<string>();
 
         public static string Image(this ClaimsPrincipal principal)
-            => principal.FindFirst("image")?.Value;
+            => principal.FindFirst(CustomClaimTypes.Image)?.Value;
+
+        public static string FirstName(this ClaimsPrincipal principal)
+            => principal.FindFirst(CustomClaimTypes.FirstName)?.Value;
+
+        public static string LastName(this ClaimsPrincipal principal)
+            => principal.FindFirst(CustomClaimTypes.LastName)?.Value;
+
+        public static string Email(this ClaimsPrincipal principal)
+            => principal.FindFirst(JwtClaimTypes.Name)?.Value;
 
         public static T GetUserId<T>(this ClaimsPrincipal principal)
         {

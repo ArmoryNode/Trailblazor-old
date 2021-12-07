@@ -1,10 +1,30 @@
-﻿.profile-container {
-    display: flex;
-    align-items:center;
-    padding: 0 1rem;
-    margin-left: auto;
+﻿@import "../Styles/_all";
 
-    > img {
+.profile-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 10px;
+    color: $off-white;
+    background-color: rgba($grey, .3);
+    border-radius: 15px;
+
+    picture > img, & > svg {
+        width: 45px;
+        height: 45px;
+        fill: $off-white;
         border-radius: 50%;
+    }
+
+    .profile-info {
+        padding: 0 1em;
+        .profile-name {
+
+        }
+
+        .profile-email {
+
+        }
     }
 }
