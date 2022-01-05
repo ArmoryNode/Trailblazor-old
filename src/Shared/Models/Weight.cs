@@ -89,7 +89,8 @@ namespace Trailblazor.Shared.Models
 
         public override bool Equals(object other) => other is Weight weight && Equals(weight);
         public override int GetHashCode() => (int)Unit ^ (int)Amount;
-        public override string ToString() => $"{Amount}{Unit.GetShortName()}";
+        public override string ToString() => $"{Amount}\u0020{Unit.GetName()}";
+        public string ToShortString() => $"{Amount}\u0020{Unit.GetShortName()}";
 
         #endregion
     }

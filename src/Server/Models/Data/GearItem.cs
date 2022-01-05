@@ -1,4 +1,6 @@
-﻿namespace Trailblazor.Server.Models.Data
+﻿using Trailblazor.Shared.Models;
+
+namespace Trailblazor.Server.Models.Data
 {
     public record GearItem(string Id, Guid OwnerId, string OwnerName) : BaseDocument(Id)
     {
@@ -9,5 +11,7 @@
         public bool Favorite { get; set; } = false;
         public bool Consumable { get; set; } = false;
         public bool Wearable { get; set; } = false;
+
+        public Weight Weight { get; init; }
     }
 }

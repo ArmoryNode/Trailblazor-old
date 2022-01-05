@@ -6,10 +6,10 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Trailblazor.Server.Models.Data
 {
     /// <summary>
-    ///     The base record for MongoDB entities.
+    ///     The base document for MongoDB entities.
     /// </summary>
     /// <param name="Id">
-    ///     The ObjectId of the record.
+    ///     The ObjectId of the document.
     /// </param>
     public abstract record BaseDocument([property:BsonId] [property:BsonRepresentation(BsonType.ObjectId)] string Id)
     {
