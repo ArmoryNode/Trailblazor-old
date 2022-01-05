@@ -19,9 +19,6 @@ namespace Trailblazor.Shared.ViewModels
 
         public Weight Weight { get; init; }
 
-        public string WeightString => Weight.ToString();
-        public string ShortWeightString => Weight.ToShortString();
-
         public DateTimeOffset Created { get; init; } = DateTimeOffset.UtcNow;
         public DateTimeOffset LastModified { get; set; } = DateTimeOffset.UtcNow;
     }

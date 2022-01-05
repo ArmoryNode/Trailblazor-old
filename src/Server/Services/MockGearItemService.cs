@@ -19,7 +19,7 @@ namespace Trailblazor.Server.Services
         {
             _serviceScopeFactory = serviceScopeFactory;
 
-            InitializeGearItems();
+            SeedMockGearItems();
         }
 
         public Task<IEnumerable<GearItemViewModel>> GetAll(CancellationToken cancellationToken)
@@ -95,7 +95,7 @@ namespace Trailblazor.Server.Services
             return Task.FromResult(true);
         }
 
-        private void InitializeGearItems()
+        private void SeedMockGearItems()
         {
             using var scope = _serviceScopeFactory.CreateScope();
 

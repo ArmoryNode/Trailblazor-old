@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Trailblazor.Server.Handlers.Authorization;
-using Trailblazor.Server.Models.Data;
-using Trailblazor.Server.Services;
 using Trailblazor.Shared.Services;
 using Trailblazor.Shared.ViewModels;
 
@@ -43,7 +39,7 @@ namespace Trailblazor.Server.Controllers
             return Ok(userGearItems);
         }
 
-        [HttpGet]
+        [HttpGet("/{gearItemId}")]
         public async ValueTask<IActionResult> GetGearItem(string gearItemId, CancellationToken cancellationToken)
         {
             var gearItem = await _gearItemService.GetById(gearItemId, cancellationToken);
