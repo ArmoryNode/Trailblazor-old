@@ -1,4 +1,5 @@
 ﻿using Trailblazor.Shared.Models;
+using Trailblazor.Shared.ViewModels;
 
 namespace Trailblazor.Server.Models.Data
 {
@@ -12,6 +13,24 @@ namespace Trailblazor.Server.Models.Data
         public bool Consumable { get; set; } = false;
         public bool Wearable { get; set; } = false;
 
-        public Weight Weight { get; init; }
+        public Weight Weight { get; set; }
+
+        public GearItem UpdateFrom(GearItemViewModel viewModel)
+        {
+            return this with
+            {
+                Name = viewModel.Name,
+                Description = viewModel.Description,
+                Link = viewModel.Link,
+
+                Favorite = viewModel.Favorite,
+                Consumable = viewModel.Consumable,
+                Wearable = viewModel.Wearable,
+
+                Weight = viewModel.Weight,
+
+                LastModified = DateTimeOffset.UtcNow
+            };
+        }
     }
 }

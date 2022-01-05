@@ -69,6 +69,32 @@ namespace Trailblazor.Server.Services
             return Task.FromResult(viewModel);
         }
 
+        public Task<bool> Remove(GearItemViewModel viewModel, CancellationToken cancellationToken)
+        {
+            var gearItem = _gearItems.SingleOrDefault(i => i.Id == viewModel.Id);
+            if (gearItem == null)
+                return Task.FromResult(false);
+
+            var removed = _gearItems.Remove(gearItem);
+
+            return Task.FromResult(removed);
+        }
+
+        public Task<bool> Upsert(GearItemViewModel viewModel, CancellationToken cancellationToken)
+        {
+            var gearItem = _gearItems.SingleOrDefault(i => i.Id == viewModel.Id);
+            if (gearItem != null)
+                _gearItems.Remove(gearItem);
+
+            var newGearItem = new GearItem(viewModel.Id, viewModel.OwnerId, viewModel.OwnerName);
+
+            newGearItem.UpdateFrom(viewModel);
+
+            _gearItems.Add(newGearItem);
+
+            return Task.FromResult(true);
+        }
+
         private void InitializeGearItems()
         {
             using var scope = _serviceScopeFactory.CreateScope();
@@ -98,7 +124,7 @@ namespace Trailblazor.Server.Services
                     LastModified = DateTime.UtcNow,
                     Created = DateTimeOffset.UtcNow,
                 },
-                new GearItem("61ca5f74bf74701671b07c46", userId, "Someone else.")
+                new GearItem("61ca5f74bf74701671b07c46", Guid.NewGuid(), "Someone else.")
                 {
                     Name = "Someone Else's",
                     Description = "You shouldn't be able to see this.",
