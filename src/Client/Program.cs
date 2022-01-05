@@ -17,4 +17,7 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().Cre
 builder.Services.AddApiAuthorization()
     .AddAccountClaimsPrincipalFactory<CustomUserFactory>();
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<TokenProvider>();
+
 await builder.Build().RunAsync();
