@@ -17,6 +17,11 @@ namespace Trailblazor.Shared.ViewModels
         public bool Consumable { get; set; } = false;
         public bool Wearable { get; set; } = false;
 
+        public Weight Weight { get; init; }
+
+        public string WeightString => Weight.ToString();
+        public string ShortWeightString => Weight.ToShortString();
+
         public DateTimeOffset Created { get; init; } = DateTimeOffset.UtcNow;
         public DateTimeOffset LastModified { get; set; } = DateTimeOffset.UtcNow;
     }

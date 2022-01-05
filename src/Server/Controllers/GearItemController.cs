@@ -34,13 +34,28 @@ namespace Trailblazor.Server.Controllers
 
             foreach (var gearItem in gearItems)
             {
-                var result = await _authorizationService.AuthorizeAsync(User, gearItem, Policies.GearItemOwner);
+                var authorizationResult = await _authorizationService.AuthorizeAsync(User, gearItem, Policies.GearItemOwner);
 
-                if (result.Succeeded)
+                if (authorizationResult.Succeeded)
                     userGearItems.Add(gearItem);
             }
 
             return Ok(userGearItems);
+        }
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetGearItem(string gearItemId, CancellationToken cancellationToken)
+        {
+            var gearItem = await _gearItemService.GetById(gearItemId, cancellationToken);
+            if (gearItem == null)
+                return NotFound();
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, gearItem, Policies.GearItemOwner);
+
+            if (authorizationResult.Succeeded)
+                return Ok(gearItem);
+
+            return NotFound();
         }
     }
 }
