@@ -5,13 +5,15 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Trailblazor.Server.Models.Data
 {
-    public abstract record BaseDocument
+    /// <summary>
+    ///     The base record for MongoDB entities.
+    /// </summary>
+    /// <param name="Id">
+    ///     The ObjectId of the record.
+    /// </param>
+    public abstract record BaseDocument([property:BsonId] [property:BsonRepresentation(BsonType.ObjectId)] string Id)
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; init; }
-
-        public DateTimeOffset Created { get; init; }
-        public DateTimeOffset LastModified { get; init; }
+        public DateTimeOffset Created { get; init; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset LastModified { get; set; } = DateTimeOffset.UtcNow;
     }
 }

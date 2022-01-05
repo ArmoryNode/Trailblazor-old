@@ -10,8 +10,8 @@
 <div class="profile-container">
     @if (UserHasImage)
     {
-        <picture @onclick="OnProfileClicked">
-            <source srcset="@(User?.Image() ?? string.Empty)" />
+        <picture>
+            <source type="image/png" srcset="@(User?.Image() ?? string.Empty)" />
             <img width="35" height="35" src="/images/unauthenticated.svg" />
         </picture>
     }
@@ -27,18 +27,6 @@
 </div>
 
 @code {
-
-    private bool _menuOpened = false;
-    private bool MenuOpened
-    {
-        get => _menuOpened;
-        set
-        {
-            _menuOpened = value;
-            StateHasChanged();
-        }
-    }
-
     private ClaimsPrincipal? _user;
     private ClaimsPrincipal? User
     {
@@ -54,9 +42,6 @@
 
     private async Task OnAuthStateChanged(Task<AuthenticationState> authenticationStateTask)
         => User = (await authenticationStateTask).User;
-
-    private void OnProfileClicked()
-        => MenuOpened = !MenuOpened;
 
     protected override async Task OnInitializedAsync()
     {

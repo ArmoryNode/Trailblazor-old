@@ -1,18 +1,26 @@
 ﻿namespace Trailblazor;
 
-public struct Constants
+public static class Constants
 {
-    public struct Authentication
+    public static class Authentication
     {
-        public struct ExternalProviders
+        public static class ExternalProviders
         {
             public const string Google = "Google";
         }
 
-        public struct Sections
+        public static class Sections
         {
             public const string ClientId = "ClientId";
             public const string ClientSecret = "ClientSecret";
+        }
+    }
+
+    public static class Authorization
+    {
+        public static class Policies
+        {
+            public const string GearItemOwner = nameof(GearItemOwner);
         }
     }
 }

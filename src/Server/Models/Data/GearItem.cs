@@ -1,20 +1,13 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-#nullable disable
-
-namespace Trailblazor.Server.Models.Data
+﻿namespace Trailblazor.Server.Models.Data
 {
-    public record GearItem : BaseDocument
+    public record GearItem(string Id, Guid OwnerId, string OwnerName) : BaseDocument(Id)
     {
-        public Guid OwnerId { get; init; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Link { get; set; } = string.Empty;
 
-        public string Name { get; init; } = string.Empty;
-        public string Description { get; init; } = string.Empty;
-        public string Link { get; init; } = string.Empty;
-
-        public bool IsFavorite { get; init; } = false;
-        public bool IsConsumable { get; init; } = false;
-        public bool IsWearable { get; init; } = false;
+        public bool Favorite { get; set; } = false;
+        public bool Consumable { get; set; } = false;
+        public bool Wearable { get; set; } = false;
     }
 }

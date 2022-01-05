@@ -5,10 +5,17 @@ using Microsoft.EntityFrameworkCore;
 using Trailblazor.Server.Data;
 using Trailblazor.Server.Models;
 using Trailblazor.Server.Infrastructure;
+using Trailblazor.Server.Services;
 
 using static Trailblazor.Constants.Authentication;
 using static Trailblazor.Shared.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Trailblazor.Shared.Services;
+using Trailblazor.Shared.ViewModels;
+using static Trailblazor.Constants;
+using static Trailblazor.Constants.Authorization;
+using Trailblazor.Server.Handlers.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +59,18 @@ builder.Services.Configure<TrailblazorDatabaseSettings>(builder.Configuration.Ge
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSingleton<IAuthorizationHandler, GearItemOwnerHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Policies.GearItemOwner, policy => 
+        policy.Requirements.Add(new GearItemOwnerRequirement()));
+});
+
+builder.Services.AddSingleton<IDataService<GearItemViewModel>, MockGearItemService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -77,7 +96,6 @@ app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapRazorPages();
 app.MapControllers();

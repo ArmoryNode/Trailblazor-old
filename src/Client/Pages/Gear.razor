@@ -1,8 +1,24 @@
 ﻿@page "/gear"
-@*@attribute [Authorize]*@
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Trailblazor.Shared.ViewModels
+@inject HttpClient Http
 
 <h3>Gear</h3>
 
-@code {
 
+<button type="button" class="btn btn-primary" @onclick="OnClick">Click me!</button>
+    
+
+@code {
+    private async Task OnClick()
+    {
+        try
+        {
+            var foo = await Http.GetFromJsonAsync<IEnumerable<GearItemViewModel>>("/api/GearItem");
+        }
+        catch (AccessTokenNotAvailableException accessTokenException)
+        {
+            accessTokenException.Redirect();
+        }
+    }
 }

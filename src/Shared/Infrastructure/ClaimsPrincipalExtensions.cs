@@ -26,8 +26,11 @@ namespace Trailblazor.Shared
 
         public static T GetUserId<T>(this ClaimsPrincipal principal)
         {
-            if (principal is null || principal.Identity is null || !principal.Identity.IsAuthenticated)
+            if (principal?.Identity is null)
                 throw new ArgumentNullException(nameof(principal));
+
+            if (!principal.Identity.IsAuthenticated)
+                throw new ArgumentException("Principal is not authenticated.", nameof(principal));
 
             var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -45,6 +48,20 @@ namespace Trailblazor.Shared
             }
 
             throw new InvalidOperationException("User Id is invalid.");
+        }
+
+        public static bool TryGetUserId<T>(this ClaimsPrincipal principal, out T userId)
+        {
+            try
+            {
+                userId = principal.GetUserId<T>();
+                return true;
+            }
+            catch (Exception)
+            {
+                userId = default;
+                return false;
+            }
         }
     }
 }
