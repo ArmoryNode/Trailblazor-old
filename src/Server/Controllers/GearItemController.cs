@@ -7,8 +7,8 @@ using static Trailblazor.Constants.Authorization;
 
 namespace Trailblazor.Server.Controllers
 {
-    //[Authorize]
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class GearItemController : ControllerBase
     {
@@ -39,7 +39,7 @@ namespace Trailblazor.Server.Controllers
             return Ok(userGearItems);
         }
 
-        [HttpGet("/{gearItemId}")]
+        [HttpGet("{gearItemId}")]
         public async ValueTask<IActionResult> GetGearItem(string gearItemId, CancellationToken cancellationToken)
         {
             var gearItem = await _gearItemService.GetById(gearItemId, cancellationToken);
