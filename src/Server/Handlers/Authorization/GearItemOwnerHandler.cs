@@ -10,6 +10,7 @@ namespace Trailblazor.Server.Handlers.Authorization
                                                        GearItemOwnerRequirement requirement,
                                                        GearItemViewModel resource)
         {
+            // This policy should not be used in an anonymous context, but this is here just in case.
             if (context.User.Identity!.IsAuthenticated)
             {
                 if (context.User.GetUserId<Guid>() == resource.OwnerId)

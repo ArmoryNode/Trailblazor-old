@@ -1,0 +1,26 @@
+﻿@import "../../Styles/_all.scss";
+
+.tb-card {
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+    background-color: $grey;
+    color: $off-white;
+    height: 120px;
+    border-radius: $border-radius;
+
+    @include medium-elevation;
+
+    .tb-card-title {
+        padding: 8px 18px;
+        border-top-right-radius: $border-radius;
+        border-top-left-radius: $border-radius;
+    }
+
+    .tb-card-body {
+        flex-grow: 1;
+        padding: 0px 18px 8px 18px;
+        border-bottom-right-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+    }
+}

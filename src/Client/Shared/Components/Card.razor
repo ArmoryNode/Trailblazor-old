@@ -1,0 +1,18 @@
+﻿<div class="tb-card">
+    <div class="tb-card-title">
+        @if (CardTitle is not null)
+            @CardTitle
+    </div>
+    <div class="tb-card-body">
+        @if (CardBody is not null)
+            @CardBody
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? CardTitle { get; set; }
+
+    [Parameter]
+    public RenderFragment? CardBody { get; set; }
+}

@@ -7,7 +7,7 @@ using static Trailblazor.Constants.Authorization;
 
 namespace Trailblazor.Server.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class GearItemController : ControllerBase

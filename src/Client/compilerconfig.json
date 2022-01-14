@@ -10,5 +10,9 @@
   {
     "outputFile": "wwwroot/css/root.css",
     "inputFile": "Styles/root.scss"
+  },
+  {
+    "outputFile": "Shared/Components/Card.razor.css",
+    "inputFile": "Shared/Components/Card.razor.scss"
   }
 ]
