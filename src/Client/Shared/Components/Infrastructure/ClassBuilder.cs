@@ -1,4 +1,4 @@
-﻿namespace Trailblazor.Client.Shared.Components.Infrastructure
+﻿namespace Trailblazor.Client.Shared.Components
 {
     public sealed class ClassBuilder
     {

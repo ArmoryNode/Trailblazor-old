@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Trailblazor.Shared.ViewModels
 @inject HttpClient Http
+@attribute [Authorize]
 
 <h3>Gear</h3>
 
@@ -9,7 +10,7 @@
 
 <div class="row mt-3">
     <div class="col">
-        <Card>
+        <Card ClickAction="() => { }">
             <CardTitle>Card Title</CardTitle>
             <CardBody>
                 Card Body
@@ -49,10 +50,10 @@
     {
         try
         {
-            //var gearItems = await Http.GetFromJsonAsync<IEnumerable<GearItemViewModel>>("/api/GearItem");
+            var gearItems = await Http.GetFromJsonAsync<IEnumerable<GearItemViewModel>>("/api/GearItem");
 
-            //if (gearItems is not null)
-            //    GearItems.AddRange(gearItems);
+            if (gearItems is not null)
+                GearItems.AddRange(gearItems);
         }
         catch (AccessTokenNotAvailableException accessTokenException)
         {
