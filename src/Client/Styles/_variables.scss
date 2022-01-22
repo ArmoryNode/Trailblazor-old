@@ -1,18 +1,29 @@
 ﻿//****** Colors ******//
-$red: #EA5030;
+$red: #FD5B49;
 $orange: #E5691E;
 $yellow: #F0AF2C;
-$green: #1EB972;
-$blue: #0190F8;
-$purple: #836DCA;
-$cyan: #00D0E8; 
+$green: #26C07A;
+$blue: #2AA6FE;
+$purple: #6F56C2;
+$cyan: #00D0E8;
 
 $white: #FFFFFF;
 $off-white: #F2F2F2;
 $light-grey: #dadada;
-$grey: #272B30;
-$dark-grey: #1A1C1E;
-$black: #111315;
+$grey: #3D3D3F;
+$dark-grey: #2F2F31;
+$black: #1D1D1F;
+
+$primary: $blue;
+$secondary: $grey;
+$success: $green;
+$info: $purple;
+$warning: $yellow;
+$danger: $red;
+$light: $off-white;
+$dark: $black;
+
+$color-map: ( "primary": $primary, "secondary": $secondary, "success": $success, "info": $info, "warning": $warning, "danger": $danger, "light": $light, "dark": $dark );
 
 //***** Animations *****//
 $transition-duration: .3s;
@@ -20,7 +31,6 @@ $transition-timing-function: ease;
 
 //***** Layout *****//
 $topbar-height: 100px;
-
 
 //***** Components *****//
 $border-radius: 15px;

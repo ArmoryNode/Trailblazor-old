@@ -8,7 +8,8 @@ $card-border-radius: 8px;
     position: relative;
     background-color: $grey;
     color: $off-white;
-    height: 120px;
+    /*height: 120px;*/
+    padding: 24px;
     border-radius: $card-border-radius;
 
     @include medium-elevation;
@@ -23,15 +24,23 @@ $card-border-radius: 8px;
     }
 
     .tb-card-title {
-        padding: 12px 24px;
+        font-weight: bold;
+        /*padding: 12px 24px;*/
         border-top-right-radius: $card-border-radius;
         border-top-left-radius: $card-border-radius;
     }
 
     .tb-card-body {
         flex-grow: 1;
-        padding: 0px 24px 8px 24px;
+        padding: 12px 0;
         border-bottom-right-radius: $card-border-radius;
         border-bottom-left-radius: $card-border-radius;
+    }
+}
+
+@each $key, $val in $color-map {
+    .tb-card-#{$key} {
+        background-color: $val;
+        color: lookup-text-color($val);
     }
 }

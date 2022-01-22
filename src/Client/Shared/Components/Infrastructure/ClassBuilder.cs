@@ -2,6 +2,8 @@
 {
     public sealed class ClassBuilder
     {
+        public event EventHandler<string>? ClassesChanged;
+
         private readonly List<string> _classes = new();
 
         public string Build => string.Join('\u0020', _classes);
@@ -20,6 +22,8 @@
             if (!_classes.Contains(className))
                 _classes.Add(className);
 
+            ClassesChanged?.Invoke(this, className);
+
             return this;
         }
 
@@ -27,6 +31,8 @@
         {
             if (_classes.Contains(className))
                 _classes.Remove(className);
+
+            ClassesChanged?.Invoke(this, className);
 
             return this;
         }
@@ -37,6 +43,8 @@
                 _classes.Remove(className);
             else
                 _classes.Add(className);
+
+            ClassesChanged?.Invoke(this, className);
 
             return this;
         }

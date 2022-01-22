@@ -1,19 +1,19 @@
 ﻿:root {
-  --red: #EA5030;
+  --red: #FD5B49;
   --orange: #E5691E;
   --yellow: #F0AF2C;
-  --green: #1EB972;
-  --blue: #0190F8;
-  --purple: #836DCA;
+  --green: #26C07A;
+  --blue: #2AA6FE;
+  --purple: #6F56C2;
   --white: #FFFFFF;
   --off-white: #F2F2F2;
   --light-grey: #dadada;
-  --grey: #272B30;
-  --dark-grey: #1A1C1E;
-  --black: #111315;
-  --background-color: #111315;
-  --middleground-color: #1A1C1E;
-  --foreground-color: #272B30;
+  --grey: #3D3D3F;
+  --dark-grey: #2F2F31;
+  --black: #1D1D1F;
+  --background-color: #1D1D1F;
+  --middleground-color: #2F2F31;
+  --foreground-color: #3D3D3F;
   --text-color: #F2F2F2;
   --transition-duration: 0.3s;
 }
@@ -37,7 +37,7 @@ body {
   position: absolute;
   width: 25px;
   height: 25px;
-  background-color: #0190F8;
+  background-color: #2AA6FE;
 }
 .loader::before {
   top: 0;

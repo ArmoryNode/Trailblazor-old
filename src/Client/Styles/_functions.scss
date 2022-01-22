@@ -1,0 +1,28 @@
+﻿@import "_variables";
+
+@function lookup-text-color($background-color) {
+    @if ($background-color == $primary) {
+        @return $black;
+    }
+    @else if ($background-color == $secondary) {
+        @return $off-white;
+    }
+    @else if ($background-color == $success) {
+        @return $black;
+    }
+    @else if ($background-color == $info) {
+        @return $black;
+    }
+    @else if ($background-color == $warning) {
+        @return $black;
+    }
+    @else if ($background-color == $danger) {
+        @return $black;
+    }
+    @else if ($background-color == $light) {
+        @return $black;
+    }
+    @else if ($background-color == $dark) {
+        @return $off-white;
+    }
+}

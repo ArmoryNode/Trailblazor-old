@@ -1,6 +1,6 @@
 ﻿@inherits ComponentBase
 
-<div class="tb-card @_cardClassBuilder.Build)">
+<div class="tb-card @_cardClassBuilder.Build">
     <div class="tb-card-title">
         @if (CardTitle is not null)
             @CardTitle
@@ -12,15 +12,6 @@
 </div>
 
 @code {
-
-    private ClassBuilder _cardClassBuilder = new ClassBuilder();
-
-    public Card()
-    {
-        if (ClickAction is not null)
-            _cardClassBuilder.AddClass("tb-card-clickable");
-    }
-
     [Parameter]
     public RenderFragment? CardTitle { get; set; }
 
@@ -29,4 +20,25 @@
 
     [Parameter]
     public Action? ClickAction { get; set; } = null;
+
+    [Parameter]
+    public Color Theme { get; set; } = Color.Secondary;
+
+    private string GetTheme => $"tb-card-{Theme.ToString().ToLower()}";
+
+    private ClassBuilder _cardClassBuilder = new ClassBuilder();
+
+    protected override void OnParametersSet()
+    {
+        if (ClickAction is not null)
+            _cardClassBuilder.AddClass("tb-card-clickable");
+
+        _cardClassBuilder.AddClass(GetTheme);
+
+        _cardClassBuilder.ClassesChanged += OnClassesChanged;
+
+        base.OnParametersSet();
+    }
+
+    private void OnClassesChanged(object? sender, string className) => this.StateHasChanged();
 }
