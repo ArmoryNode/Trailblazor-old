@@ -1,2 +1,2 @@
 # Trailblazor
-A hiking, camping, and backpacking companion app. Written in Blazor, using .NET 6.
+A hiking, camping, and backpacking companion app. Written in C#, using Blazor and .NET 6.
