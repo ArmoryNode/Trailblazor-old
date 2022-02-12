@@ -9,17 +9,17 @@ $card-border-radius: 8px;
     background-color: $grey;
     color: $off-white;
     /*height: 120px;*/
-    padding: 24px;
+    padding: 16px;
     border-radius: $card-border-radius;
 
-    @include medium-elevation;
+    @include medium-elevation($black);
     @include transition-for(all);
 
     &.tb-card-clickable {
         cursor: pointer;
 
         &:hover {
-            @include high-elevation;
+            @include medium-elevation($black);
         }
     }
 
@@ -32,7 +32,7 @@ $card-border-radius: 8px;
 
     .tb-card-body {
         flex-grow: 1;
-        padding: 12px 0;
+        padding: 12px 0 0;
         border-bottom-right-radius: $card-border-radius;
         border-bottom-left-radius: $card-border-radius;
     }

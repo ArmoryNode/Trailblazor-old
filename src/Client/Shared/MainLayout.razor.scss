@@ -29,7 +29,7 @@ body {
         grid-area: sidebar;
         background-color: $foreground-color;
         padding: 0 1rem;
-        @include medium-elevation;
+        @include low-elevation;
 
         .site-icon {
             display: flex;

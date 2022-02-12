@@ -14,5 +14,17 @@
   {
     "outputFile": "Shared/Components/Card.razor.css",
     "inputFile": "Shared/Components/Card.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/ActionButton.razor.css",
+    "inputFile": "Shared/Components/ActionButton.razor.scss"
+  },
+  {
+    "outputFile": "Pages/Gear.razor.css",
+    "inputFile": "Pages/Gear.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/Window.razor.css",
+    "inputFile": "Shared/Components/Window.razor.scss"
   }
 ]

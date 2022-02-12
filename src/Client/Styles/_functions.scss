@@ -2,7 +2,7 @@
 
 @function lookup-text-color($background-color) {
     @if ($background-color == $primary) {
-        @return $black;
+        @return $off-white;
     }
     @else if ($background-color == $secondary) {
         @return $off-white;

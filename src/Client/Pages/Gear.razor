@@ -2,62 +2,80 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Trailblazor.Shared.ViewModels
 @inject HttpClient Http
-@attribute [Authorize]
+@inject IJSRuntime jsRuntime
+@*@attribute [Authorize]*@
 
 <h3>Gear</h3>
 
 <button type="button" class="btn btn-primary" @onclick="OnClick">Click me!</button>
 
-<div class="row mt-3">
-    <div class="col">
-        <Card Theme="Color.Primary" ClickAction="() => { }">
-            <CardTitle>Card Title</CardTitle>
-            <CardBody>
-                Card Body
-            </CardBody>
-        </Card>
+@if (GearItems is null || GearItems.Count == 0)
+{
+    <h2>Click on the button to load gear items.</h2>
+}
+else
+{
+    <div class="row mt-3">
+        @foreach (var item in GearItems)
+        {
+            <div class="col-12 col-sm-6 col-xl-4">
+                <Card>
+                    <CardTitle>@item.Name</CardTitle>
+                    <CardBody>
+                        <div class="tb-card-text">
+                            @item.Description
+                        </div>
+                        <ActionButton Theme="Color.Primary" Type="ButtonType.Edit" />
+                    </CardBody>
+                </Card>
+            </div>
+        }
     </div>
-    <div class="col">
-        <Card>
-            <CardTitle>Card Title</CardTitle>
-            <CardBody>
-                Card Body
-            </CardBody>
-        </Card>
-    </div>
-    <div class="col">
-        <Card>
-            <CardTitle>Card Title</CardTitle>
-            <CardBody>
-                Card Body
-            </CardBody>
-        </Card>
-    </div>
-    <div class="col">
-        <Card>
-            <CardTitle>Card Title</CardTitle>
-            <CardBody>
-                Card Body
-            </CardBody>
-        </Card>
-    </div>
-</div>
+}
+
+<button type="button" class="btn btn-success" @onclick="() => Window!.Toggle()">Open Window</button>
+
+<Window Title="Window" @ref="Window">
+    <WindowContent>
+        <div class="container p-4">
+            <div class="form-row">
+                <div class="col-3">
+                    <label class="form-label" for="testInput">Test Input</label>
+                    <input id="testInput" class="form-control" type="text" value="Test" />
+                </div>
+            </div>
+        </div>
+    </WindowContent>
+</Window>
 
 @code {
+    private Window? Window { get; set; }
+
     public List<GearItemViewModel> GearItems { get; set; } = new();
 
     private async Task OnClick()
     {
         try
         {
-            var gearItems = await Http.GetFromJsonAsync<IEnumerable<GearItemViewModel>>("/api/GearItem");
+            var fetchedGearItems = await Http.GetFromJsonAsync<IEnumerable<GearItemViewModel>>("/api/GearItem");
 
-            if (gearItems is not null)
-                GearItems.AddRange(gearItems);
+            if (fetchedGearItems is not null)
+            {
+                if (GearItems.Any())
+                    GearItems.Clear();
+
+                GearItems.AddRange(fetchedGearItems);
+            }
+
         }
         catch (AccessTokenNotAvailableException accessTokenException)
         {
             accessTokenException.Redirect();
         }
     }
+
+    //private ValueTask OpenItemLink(string link)
+    //{
+    //    return jsRuntime.InvokeVoidAsync("open", link, "_blank");
+    //}
 }

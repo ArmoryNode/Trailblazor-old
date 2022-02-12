@@ -1,0 +1,15 @@
+﻿::deep .tb-card {
+    .tb-card-body {
+        display: flex;
+        flex-flow: row wrap;
+
+        .tb-card-text {
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        .tb-action-button {
+            margin-left: auto;
+        }
+    }
+}

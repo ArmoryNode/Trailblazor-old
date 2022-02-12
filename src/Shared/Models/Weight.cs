@@ -7,15 +7,12 @@ using Trailblazor.Shared.Extensions;
 
 namespace Trailblazor.Shared.Models
 {
-    public class Weight : IEquatable<Weight>
+    public struct Weight : IEquatable<Weight>
     {
-        public Weight()
-        {
-        }
-
         public Weight(decimal amount)
         {
             Amount = amount;
+            Unit = default;
         }
 
         public Weight(decimal amount, WeightUnit unit)
@@ -24,8 +21,8 @@ namespace Trailblazor.Shared.Models
             Unit = unit;
         }
 
-        public decimal Amount { get; set; } = default;
-        public WeightUnit Unit { get; init; } = WeightUnit.Grams;
+        public decimal Amount { get; set; }
+        public WeightUnit Unit { get; init; }
 
         #region Utilities 
 

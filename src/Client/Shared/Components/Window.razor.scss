@@ -1,0 +1,72 @@
+﻿@import "../../Styles/_all";
+
+$window-color: $grey;
+
+.tb-window-modal-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($black, 0.4);
+    z-index: 99;
+}
+
+.tb-window {
+    box-sizing: border-box;
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 800px;
+    height: 500px;
+    top: calc(50% - 250px);
+    left: calc(50% - 400px);
+    background-color: $dark-grey;
+    z-index: 100;
+    @include medium-elevation($black);
+
+    .tb-window-topbar {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        padding: 6px 6px 6px 12px;
+        background-color: $grey;
+        min-height: 36px;
+
+        .tb-window-title, .tb-window-controls {
+            height: 100%;
+        }
+
+        .tb-window-title {
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .tb-window-controls {
+            display: flex;
+            flex-flow: row nowrap;
+            /*max-width: 80px;*/
+
+            .tb-window-close {
+                display: flex;
+                margin-left: auto;
+                cursor: pointer;
+
+                > i {
+                    margin: auto;
+                }
+            }
+        }
+    }
+
+    .tb-window-content {
+        flex-grow: 1;
+    }
+}

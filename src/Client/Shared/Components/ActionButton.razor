@@ -1,0 +1,72 @@
+﻿@inherits ComponentBase
+
+<button class="tb-action-button @ActionButtonClasses.Build" @onclick="ButtonClicked">
+    @if (Template is not null)
+    {
+        @Template
+    }
+    else
+    {
+        @GetIcon()
+    }
+</button>
+
+@code {
+    [Parameter]
+    public Color Theme { get; set; } = Color.Primary;
+
+    [Parameter]
+    public ButtonType Type { get; set; } = ButtonType.Add;
+
+    [Parameter]
+    public RenderFragment? Template { get; set; }
+
+    [Parameter]
+    public Action<ActionButton>? OnClick { get; set; }
+
+    private readonly ClassBuilder ActionButtonClasses = new ClassBuilder();
+
+    private Task ButtonClicked(EventArgs args)
+    {
+        this.OnClick?.Invoke(this);
+
+        return Task.CompletedTask;
+    }
+
+    protected override void OnParametersSet()
+    {
+        var themeClass = Theme switch
+        {
+            Color.Primary => nameof(Color.Primary).ToLower(),
+            Color.Secondary => nameof(Color.Secondary).ToLower(),
+            Color.Info => nameof(Color.Info).ToLower(),
+            Color.Success => nameof(Color.Success).ToLower(),
+            Color.Warning => nameof(Color.Warning).ToLower(),
+            Color.Danger => nameof(Color.Danger).ToLower(),
+            Color.Light => nameof(Color.Light).ToLower(),
+            Color.Dark => nameof(Color.Dark).ToLower(),
+            _ => nameof(Color.Secondary).ToLower()
+        };
+
+        ActionButtonClasses.AddClass($"tb-action-button-{themeClass}");
+
+        base.OnParametersSet();
+    }
+
+    RenderFragment GetIcon()
+    {
+        return Type switch
+        {
+            ButtonType.Add =>@<i class="fa-solid fa-plus fa-fw fa-xl"></i>,
+            ButtonType.Remove => @<i class="fa-solid fa-trash fa-fw fa-lg"></i>,
+            ButtonType.Save => @<i class="fa-solid fa-floppy-disk fa-fw fa-xl"></i>,
+            ButtonType.Edit => @<i class="fa-solid fa-pen fa-fw fa-lg"></i>,
+            ButtonType.Refresh => @<i class="fa-solid fa-arrow-rotate-right fa-fw fa-lg"></i>,
+            ButtonType.Link => @<i class="fa-solid fa-link fa-fw fa-lg"></i>,
+            ButtonType.Help => @<i class="fa-solid fa-question fa-fw fa-lg"></i>,
+            ButtonType.Search => @<i class="fa-solid fa-magnifying-glass fa-fw fa-lg"></i>,
+            ButtonType.Favorite => @<i class="fa-solid fa-star fa-fw fa-lg"></i>,
+            _ => @<i class="fa-solid fa-plus fa-fw fa-lg"></i>,
+        };
+    }
+}

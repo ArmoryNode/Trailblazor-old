@@ -1,0 +1,45 @@
+﻿@import "../../Styles/_all";
+
+.tb-action-button {
+    position: relative;
+    display: flex;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+
+    @include medium-elevation($black);
+    @include transition-for(all);
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: inherit;
+        height: inherit;
+        border-radius: inherit;
+
+        @include transition-for(all);
+    }
+
+    ::deep > i {
+        margin: auto;
+    }
+}
+
+@each $key, $val in $color-map {
+    .tb-action-button-#{$key} {
+        background-color: $val;
+
+        &:focus::before {
+            box-shadow: 0 0 0 0.2rem rgba($val, .7);
+        }
+        // For the icons used in render fragments
+        ::deep > i {
+            color: lookup-text-color($val);
+        }
+    }
+}

@@ -1,0 +1,60 @@
+﻿.tb-window-modal-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(29, 29, 31, 0.4);
+  z-index: 99;
+}
+
+.tb-window {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 800px;
+  height: 500px;
+  top: calc(50% - 250px);
+  left: calc(50% - 400px);
+  background-color: #2F2F31;
+  z-index: 100;
+  --shadow-color: #1D1D1F;
+  box-shadow: 0.3px 0.5px 0.7px rgba(29, 29, 31, 0.36), 0.8px 1.6px 2px -0.8px rgba(29, 29, 31, 0.36), 2.1px 4.1px 5.2px -1.7px rgba(29, 29, 31, 0.36), 5px 10px 12.6px -2.5px rgba(29, 29, 31, 0.36);
+}
+.tb-window *, .tb-window *::before, .tb-window *::after {
+  box-sizing: border-box;
+}
+.tb-window .tb-window-topbar {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 6px 6px 6px 12px;
+  background-color: #3D3D3F;
+  min-height: 36px;
+}
+.tb-window .tb-window-topbar .tb-window-title, .tb-window .tb-window-topbar .tb-window-controls {
+  height: 100%;
+}
+.tb-window .tb-window-topbar .tb-window-title {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.tb-window .tb-window-topbar .tb-window-controls {
+  display: flex;
+  flex-flow: row nowrap;
+  /*max-width: 80px;*/
+}
+.tb-window .tb-window-topbar .tb-window-controls .tb-window-close {
+  display: flex;
+  margin-left: auto;
+  cursor: pointer;
+}
+.tb-window .tb-window-topbar .tb-window-controls .tb-window-close > i {
+  margin: auto;
+}
+.tb-window .tb-window-content {
+  flex-grow: 1;
+}

@@ -1,0 +1,1 @@
+﻿::deep .tb-card .tb-card-body{display:flex;flex-flow:row wrap;}::deep .tb-card .tb-card-body .tb-card-text{width:100%;word-wrap:break-word;}::deep .tb-card .tb-card-body .tb-action-button{margin-left:auto;}

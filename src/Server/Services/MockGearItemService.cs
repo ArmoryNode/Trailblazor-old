@@ -28,6 +28,7 @@ namespace Trailblazor.Server.Services
             {
                 Name = i.Name,
                 Description = i.Description,
+                Link = i.Link,
 
                 Created = i.Created,
                 LastModified = i.LastModified,
@@ -56,6 +57,7 @@ namespace Trailblazor.Server.Services
                 {
                     Name = entity.Name,
                     Description = entity.Description,
+                    Link = entity.Link,
 
                     Created = entity.Created,
                     LastModified = entity.LastModified,
@@ -112,17 +114,28 @@ namespace Trailblazor.Server.Services
                 {
                     Name = "Backpack",
                     Description = "The coolest backpack I own",
-                    Link = "https://google.com?q=backpack",
+                    Link = "https://images.google.com/search?q=backpack",
                     LastModified = DateTime.UtcNow,
                     Created = DateTimeOffset.UtcNow,
+                    Weight = new Weight(3, WeightUnit.Pounds),
                 },
                 new GearItem("61ca5f74bf74701671b07c46", userId, "You!")
                 {
                     Name = "Trekking Poles",
                     Description = "Poles for trekking",
-                    Link = "https://google.com?q=trekking_poles",
+                    Link = "https://images.google.com/search?q=trekking%20poles",
                     LastModified = DateTime.UtcNow,
                     Created = DateTimeOffset.UtcNow,
+                    Weight = new Weight(3, WeightUnit.Pounds),
+                },
+                new GearItem("61f22833278f55c1a7c72fc3", Guid.NewGuid(), "You!")
+                {
+                    Name = "Hat",
+                    Description = "My favorite hat",
+                    Link = "https://images.google.com/search?q=hat",
+                    LastModified = DateTime.UtcNow,
+                    Created = DateTimeOffset.UtcNow,
+                    Weight = new Weight(16, WeightUnit.Ounces),
                 },
                 new GearItem("61ca5f74bf74701671b07c46", Guid.NewGuid(), "Someone else.")
                 {
@@ -131,7 +144,8 @@ namespace Trailblazor.Server.Services
                     Link = "https://httpstatuses.com/403",
                     LastModified = DateTime.UtcNow,
                     Created = DateTimeOffset.UtcNow,
-                }
+                    Weight = new Weight(-1),
+                },
             };
 
             _gearItems.AddRange(gearItems);

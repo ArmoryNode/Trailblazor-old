@@ -13,7 +13,7 @@ namespace Trailblazor.Server.Models.Data
         public bool Consumable { get; set; } = false;
         public bool Wearable { get; set; } = false;
 
-        public Weight Weight { get; set; }
+        public Weight Weight { get; set; } = new();
 
         public GearItem UpdateFrom(GearItemViewModel viewModel)
         {

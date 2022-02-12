@@ -1,0 +1,90 @@
+﻿@inject IJSRuntime JSRuntime
+
+@inherits ComponentBase
+
+@if (Modal && !Closed)
+{
+    <div class="tb-window-modal-overlay"></div>
+}
+
+@if (!Closed)
+{
+    <div class="tb-window" role="dialog" aria-labelledby="windowTitle_@_id" @ref="WindowContainer">
+        <div class="tb-window-topbar" @onmousedown:preventDefault="true" @onmousedown="OnTopbarMouseDown">
+            <span id="windowTitle_@_id" class="tb-window-title">@Title</span>
+            <div class="tb-window-controls">
+                <div class="tb-window-close" role="button" @onclick="CloseButtonClicked">
+                    <i class="fa-solid fa-fw fa-times fa-lg"></i>
+                </div>
+            </div>
+        </div>
+        <div class="tb-window-content">
+            @if (WindowContent is not null)
+                @WindowContent
+        </div>
+    </div>
+}
+
+@code {
+    #region Configuration
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public bool Modal { get; set; } = false;
+
+    [Parameter]
+    public bool Closed { get; set; } = false;
+
+    #endregion
+
+    #region Content
+
+    [Parameter]
+    public RenderFragment? WindowContent { get; set; }
+
+    #endregion
+
+    #region Events
+
+    public event EventHandler OnClose = delegate { };
+
+    #endregion
+
+    #region Event Handlers
+
+    private void CloseButtonClicked(MouseEventArgs args)
+    {
+        OnClose?.Invoke(this, args);
+        Closed = true;
+    }
+
+    #endregion
+
+    #region Methods
+
+    public bool Toggle() => Closed = !Closed;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Shared/Components/Window.razor.js");
+    }
+
+    #endregion
+
+    #region JS Interop
+
+    private IJSObjectReference? _jsModule;
+
+    private ElementReference? WindowContainer;
+
+    private async Task OnTopbarMouseDown(MouseEventArgs args)
+    {
+        await _jsModule!.InvokeVoidAsync("topbarMouseDown", new object[] { args, WindowContainer! });
+    }
+
+    #endregion
+
+    public readonly Guid _id = Guid.NewGuid();
+}

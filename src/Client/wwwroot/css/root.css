@@ -3,7 +3,7 @@
   --orange: #E5691E;
   --yellow: #F0AF2C;
   --green: #26C07A;
-  --blue: #2AA6FE;
+  --blue: #1B6EC2;
   --purple: #6F56C2;
   --white: #FFFFFF;
   --off-white: #F2F2F2;
@@ -37,7 +37,7 @@ body {
   position: absolute;
   width: 25px;
   height: 25px;
-  background-color: #2AA6FE;
+  background-color: #1B6EC2;
 }
 .loader::before {
   top: 0;
