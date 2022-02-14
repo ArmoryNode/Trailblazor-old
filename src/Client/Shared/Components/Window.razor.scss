@@ -14,11 +14,6 @@ $window-color: $grey;
 
 .tb-window {
     box-sizing: border-box;
-
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
-
     position: absolute;
     display: flex;
     flex-flow: column nowrap;
@@ -27,8 +22,13 @@ $window-color: $grey;
     top: calc(50% - 250px);
     left: calc(50% - 400px);
     background-color: $dark-grey;
+    border-radius: $border-radius;
     z-index: 100;
     @include medium-elevation($black);
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
 
     .tb-window-topbar {
         display: flex;
@@ -37,6 +37,12 @@ $window-color: $grey;
         padding: 6px 6px 6px 12px;
         background-color: $grey;
         min-height: 36px;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+
+        &.tb-dragging {
+            cursor: move;
+        }
 
         .tb-window-title, .tb-window-controls {
             height: 100%;

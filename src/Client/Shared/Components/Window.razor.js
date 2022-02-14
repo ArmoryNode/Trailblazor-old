@@ -4,6 +4,7 @@ export function topbarMouseDown(event, windowElement, containerElement) {
     containerElement = containerElement !== null && containerElement !== void 0 ? containerElement : document.body;
     if (typeof containerElement.style === "undefined")
         throw "Parameter `containerElement` is not an HTML element";
+    windowElement.querySelector('.tb-window-topbar').classList.add('tb-dragging');
     const initialMouseX = event.clientX;
     const initialMouseY = event.clientY;
     const offsetLeft = initialMouseX - windowElement.getBoundingClientRect().left;
@@ -29,6 +30,7 @@ export function topbarMouseDown(event, windowElement, containerElement) {
         windowElement.style.top = currentY + "px";
     };
     const dragEnd = () => {
+        windowElement.querySelector('.tb-window-topbar').classList.remove('tb-dragging');
         document.removeEventListener('mousemove', dragStart);
         document.removeEventListener('mouseup', dragEnd);
     };

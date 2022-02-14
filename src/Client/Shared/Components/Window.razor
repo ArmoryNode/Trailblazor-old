@@ -34,8 +34,18 @@
     [Parameter]
     public bool Modal { get; set; } = false;
 
+    private bool _closed = false;
     [Parameter]
-    public bool Closed { get; set; } = false;
+    public bool Closed
+    {
+        get => _closed;
+        set
+        {
+            if (value)
+                OnClose?.Invoke(this, new EventArgs());
+            _closed = value;
+        }
+    }
 
     #endregion
 
@@ -54,17 +64,17 @@
 
     #region Event Handlers
 
-    private void CloseButtonClicked(MouseEventArgs args)
-    {
-        OnClose?.Invoke(this, args);
-        Closed = true;
-    }
+    private void CloseButtonClicked(MouseEventArgs args) => Closed = true;
 
     #endregion
 
     #region Methods
 
     public bool Toggle() => Closed = !Closed;
+
+    public void Close() => Closed = true;
+
+    public void Open() => Closed = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -86,5 +96,9 @@
 
     #endregion
 
-    public readonly Guid _id = Guid.NewGuid();
+    #region Internal
+
+    private readonly Guid _id = Guid.NewGuid();
+
+    #endregion
 }

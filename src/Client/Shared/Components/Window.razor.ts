@@ -7,6 +7,8 @@
     if (typeof containerElement.style === "undefined")
         throw "Parameter `containerElement` is not an HTML element";
 
+    windowElement.querySelector('.tb-window-topbar').classList.add('tb-dragging');
+
     const initialMouseX: number = event.clientX;
     const initialMouseY: number = event.clientY;
 
@@ -43,6 +45,8 @@
     };
 
     const dragEnd = (): void => {
+        windowElement.querySelector('.tb-window-topbar').classList.remove('tb-dragging');
+
         document.removeEventListener('mousemove', dragStart);
         document.removeEventListener('mouseup', dragEnd);
     };
