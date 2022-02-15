@@ -9,7 +9,22 @@
 
 @if (!Closed)
 {
-    <div class="tb-window" role="dialog" aria-labelledby="windowTitle_@_id" @ref="WindowContainer">
+    <div class="tb-window" role="dialog" aria-labelledby="windowTitle_@_id" @ref="WindowContainer" style="@GenerateInlineStyles">
+        <div class="tb-window-resize-handles">
+            @{
+                string[] sides = { "left", "right", "top", "bottom" };
+                string[] corners = { "top-left", "top-right", "bottom-left", "bottom-right" };
+            }
+            @foreach (var side in sides)
+            {
+                <div class="tb-window-resize-handle-@side" @onmousedown:preventDefault="true" @onmousedown="(args) => OnResizeSideHandleMouseDown(args, side)"></div>
+            }
+
+            @foreach (var corner in corners)
+            {
+                <div class="tb-window-resize-handle-@corner" @onmousedown:preventDefault="true" @onmousedown="(args) => OnResizeCornerHandleMouseDown(args, corner)"></div>
+            }
+        </div>
         <div class="tb-window-topbar" @onmousedown:preventDefault="true" @onmousedown="OnTopbarMouseDown">
             <span id="windowTitle_@_id" class="tb-window-title">@Title</span>
             <div class="tb-window-controls">
@@ -34,6 +49,42 @@
     [Parameter]
     public bool Modal { get; set; } = false;
 
+    [Parameter]
+    public bool Draggable { get; set; } = true;
+
+    [Parameter]
+    public bool Resizable { get; set; } = true;
+
+    [Parameter]
+    public int Width { get; set; } = 800;
+
+    [Parameter]
+    public int Height { get; set; } = 500;
+
+    private string _left = "50%";
+    [Parameter]
+    public string Left
+    {
+        get => _left;
+        set
+        {
+            RegexHelpers.ThrowIfNoMatch(RegexHelpers.CSSLengthPattern, value);
+            _left = value;
+        }
+    }
+
+    private string _top = "50%";
+    [Parameter]
+    public string Top
+    {
+        get => _top;
+        set
+        {
+            RegexHelpers.ThrowIfNoMatch(RegexHelpers.CSSLengthPattern, value);
+            _top = value;
+        }
+    }
+
     private bool _closed = false;
     [Parameter]
     public bool Closed
@@ -51,8 +102,7 @@
 
     #region Content
 
-    [Parameter]
-    public RenderFragment? WindowContent { get; set; }
+    [Parameter] public RenderFragment? WindowContent { get; set; }
 
     #endregion
 
@@ -91,7 +141,20 @@
 
     private async Task OnTopbarMouseDown(MouseEventArgs args)
     {
-        await _jsModule!.InvokeVoidAsync("topbarMouseDown", new object[] { args, WindowContainer! });
+        if (Draggable)
+            await _jsModule!.InvokeVoidAsync("topbarMouseDown", new object[] { args, WindowContainer! });
+    }
+
+    private async Task OnResizeSideHandleMouseDown(MouseEventArgs args, string side)
+    {
+        //if (Resizable)
+        //    await _jsModule!.InvokeVoidAsync("resizeSideHandleMouseDown", new object[] { args, WindowContainer!, side });
+    }
+
+    private async Task OnResizeCornerHandleMouseDown(MouseEventArgs args, string corner)
+    {
+        //if (Resizable)
+        //    await _jsModule!.InvokeVoidAsync("resizeCornerHandleMouseDown", new object[] { args, WindowContainer!, corner });
     }
 
     #endregion
@@ -99,6 +162,10 @@
     #region Internal
 
     private readonly Guid _id = Guid.NewGuid();
+
+    private string GenerateInlineDimensions => $"width:{Width}px;height:{Height}px;";
+    private string GenerateInlinePositioning => $"left:calc({Left}\u0020-\u0020{Width / 2}px);top:calc({Top}\u0020-\u0020{Height / 2}px);";
+    private string GenerateInlineStyles => GenerateInlineDimensions + GenerateInlinePositioning;
 
     #endregion
 }
