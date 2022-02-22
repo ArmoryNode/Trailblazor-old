@@ -10,25 +10,28 @@
 @if (!Closed)
 {
     <div class="tb-window" role="dialog" aria-labelledby="windowTitle_@_id" @ref="WindowContainer" style="@GenerateInlineStyles">
-        <div class="tb-window-resize-handles">
-            @{
-                string[] sides = { "left", "right", "top", "bottom" };
-                string[] corners = { "top-left", "top-right", "bottom-left", "bottom-right" };
-            }
-            @foreach (var side in sides)
-            {
-                <div class="tb-window-resize-handle-@side" @onmousedown:preventDefault="true" @onmousedown="(args) => OnResizeSideHandleMouseDown(args, side)"></div>
-            }
+        @if (Resizable)
+        {
+            <div class="tb-window-resize-handles">
+                @{
+                    string[] sides = { "left", "right", "top", "bottom" };
+                    string[] corners = { "top-left", "top-right", "bottom-left", "bottom-right" };
+                }
+                @foreach (var side in sides)
+                {
+                    <div class="tb-window-resize-handle-@side" @onmousedown:preventDefault="true" @onmousedown="(args) => OnResizeSideHandleMouseDown(args, side)"></div>
+                }
 
-            @foreach (var corner in corners)
-            {
-                <div class="tb-window-resize-handle-@corner" @onmousedown:preventDefault="true" @onmousedown="(args) => OnResizeCornerHandleMouseDown(args, corner)"></div>
-            }
-        </div>
+                @foreach (var corner in corners)
+                {
+                    <div class="tb-window-resize-handle-@corner" @onmousedown:preventDefault="true" @onmousedown="(args) => OnResizeCornerHandleMouseDown(args, corner)"></div>
+                }
+            </div>
+        }
         <div class="tb-window-topbar" @onmousedown:preventDefault="true" @onmousedown="OnTopbarMouseDown">
             <span id="windowTitle_@_id" class="tb-window-title">@Title</span>
             <div class="tb-window-controls">
-                <div class="tb-window-close" role="button" @onclick="CloseButtonClicked">
+                <div class="tb-window-close" role="button" @onclick="CloseButtonClicked" @onclick:stopPropagation="true">
                     <i class="fa-solid fa-fw fa-times fa-lg"></i>
                 </div>
             </div>
@@ -147,8 +150,8 @@
 
     private async Task OnResizeSideHandleMouseDown(MouseEventArgs args, string side)
     {
-        //if (Resizable)
-        //    await _jsModule!.InvokeVoidAsync("resizeSideHandleMouseDown", new object[] { args, WindowContainer!, side });
+        if (Resizable)
+            await _jsModule!.InvokeVoidAsync("resizeSideHandleMouseDown", new object[] { args, WindowContainer!, side });
     }
 
     private async Task OnResizeCornerHandleMouseDown(MouseEventArgs args, string corner)
