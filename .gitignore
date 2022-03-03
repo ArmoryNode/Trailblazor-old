@@ -383,3 +383,6 @@ Desktop.ini
 *.db-shm
 *.db-wal
 /.vscode
+
+# SQL Server
+*.sql
