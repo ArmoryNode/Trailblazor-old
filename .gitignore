@@ -382,7 +382,6 @@ Desktop.ini
 *.db
 *.db-shm
 *.db-wal
-/.vscode
 
 # SQL Server
 *.sql
