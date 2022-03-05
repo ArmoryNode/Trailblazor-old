@@ -385,3 +385,6 @@ Desktop.ini
 
 # SQL Server
 *.sql
+
+# Visual Studio Code
+.vscode/
