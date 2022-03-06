@@ -9,7 +9,7 @@
 
 @if (!Closed)
 {
-    <div class="tb-window" role="dialog" aria-labelledby="windowTitle_@_id" @ref="WindowContainer" style="@GenerateInlineStyles">
+    <div class="tb-window" role="dialog" aria-labelledby="windowTitle_@_id" @ref="WindowContainer" style="@BuildWindowStyles">
         @if (Resizable)
         {
             <div class="tb-window-resize-handles">
@@ -66,11 +66,9 @@
 
     private string _left = "50%";
     [Parameter]
-    public string Left
-    {
+    public string Left {
         get => _left;
-        set
-        {
+        set {
             RegexHelpers.ThrowIfNoMatch(RegexHelpers.CSSLengthPattern, value);
             _left = value;
         }
@@ -78,11 +76,9 @@
 
     private string _top = "50%";
     [Parameter]
-    public string Top
-    {
+    public string Top {
         get => _top;
-        set
-        {
+        set {
             RegexHelpers.ThrowIfNoMatch(RegexHelpers.CSSLengthPattern, value);
             _top = value;
         }
@@ -90,11 +86,9 @@
 
     private bool _closed = false;
     [Parameter]
-    public bool Closed
-    {
+    public bool Closed {
         get => _closed;
-        set
-        {
+        set {
             if (value)
                 OnClose?.Invoke(this, new EventArgs());
             _closed = value;
@@ -145,7 +139,9 @@
     private async Task OnTopbarMouseDown(MouseEventArgs args)
     {
         if (Draggable)
-            await _jsModule!.InvokeVoidAsync("topbarMouseDown", new object[] { args, WindowContainer! });
+        {
+            var windowElement = await _jsModule!.InvokeAsync<DragResult>("topbarMouseDown", new object[] { args, WindowContainer! });
+        }
     }
 
     private async Task OnResizeSideHandleMouseDown(MouseEventArgs args, string side)
@@ -166,9 +162,14 @@
 
     private readonly Guid _id = Guid.NewGuid();
 
-    private string GenerateInlineDimensions => $"width:{Width}px;height:{Height}px;";
-    private string GenerateInlinePositioning => $"left:calc({Left}\u0020-\u0020{Width / 2}px);top:calc({Top}\u0020-\u0020{Height / 2}px);";
-    private string GenerateInlineStyles => GenerateInlineDimensions + GenerateInlinePositioning;
+    private bool FirstRender { get; set; } = true;
+
+    private string BuildWindowDimensions => $"width:{Width}px;height:{Height}px;";
+    private string BuildWindowPosition => $"left:calc({Left} - {Width / 2}px);top:calc({Top} - {Height / 2}px);";
+
+    private string BuildWindowStyles => BuildWindowDimensions + BuildWindowPosition;
+
+    private record DragResult(string Left, string Top);
 
     #endregion
 }
