@@ -162,14 +162,10 @@
 
     private readonly Guid _id = Guid.NewGuid();
 
-    private bool FirstRender { get; set; } = true;
-
     private string BuildWindowDimensions => $"width:{Width}px;height:{Height}px;";
     private string BuildWindowPosition => $"left:calc({Left} - {Width / 2}px);top:calc({Top} - {Height / 2}px);";
 
     private string BuildWindowStyles => BuildWindowDimensions + BuildWindowPosition;
-
-    private record DragResult(string Left, string Top);
 
     #endregion
 }
