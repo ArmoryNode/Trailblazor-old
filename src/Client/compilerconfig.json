@@ -1,30 +1,51 @@
 ﻿[
   {
     "outputFile": "Shared/AccountPartial.razor.css",
-    "inputFile": "Shared/AccountPartial.razor.scss"
+    "inputFile": "Shared/AccountPartial.razor.scss",
+    "minify": {
+      "enabled": false
+    }
   },
   {
     "outputFile": "Shared/MainLayout.razor.css",
-    "inputFile": "Shared/MainLayout.razor.scss"
+    "inputFile": "Shared/MainLayout.razor.scss",
+    "minify": {
+      "enabled": false
+    }
   },
   {
     "outputFile": "wwwroot/css/root.css",
-    "inputFile": "Styles/root.scss"
+    "inputFile": "Styles/root.scss",
+    "minify": {
+      "enabled": false
+    }
   },
   {
     "outputFile": "Shared/Components/Card.razor.css",
-    "inputFile": "Shared/Components/Card.razor.scss"
+    "inputFile": "Shared/Components/Card.razor.scss",
+    "minify": {
+      "enabled": false
+    }
   },
   {
     "outputFile": "Shared/Components/ActionButton.razor.css",
-    "inputFile": "Shared/Components/ActionButton.razor.scss"
+    "inputFile": "Shared/Components/ActionButton.razor.scss",
+    "minify": {
+      "enabled": false
+    }
   },
   {
     "outputFile": "Pages/Gear.razor.css",
-    "inputFile": "Pages/Gear.razor.scss"
+    "inputFile": "Pages/Gear.razor.scss",
+    "minify": {
+      "enabled": false
+    }
   },
   {
     "outputFile": "Shared/Components/Window.razor.css",
-    "inputFile": "Shared/Components/Window.razor.scss"
+    "inputFile": "Shared/Components/Window.razor.scss",
+    "minify": {
+      "enabled": false
+    }
   }
 ]
