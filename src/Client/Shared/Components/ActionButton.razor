@@ -1,6 +1,6 @@
 ﻿@inherits ComponentBase
 
-<button class="tb-action-button @ActionButtonClasses.Build" @onclick="ButtonClicked">
+<button class="tb-action-button @ActionButtonClasses.Build" @onclick="ButtonClicked" disabled="@Disabled">
     @if (Template is not null)
     {
         @Template
@@ -12,6 +12,8 @@
 </button>
 
 @code {
+    #region Configuration
+
     [Parameter]
     public Color Theme { get; set; } = Color.Primary;
 
@@ -24,14 +26,49 @@
     [Parameter]
     public Action<ActionButton>? OnClick { get; set; }
 
+    [Parameter]
+    public bool Enabled { get; set; } = true;
+
+    #endregion
+
+    #region Internal
+
+    private bool Disabled => !Enabled;
+
     private readonly ClassBuilder ActionButtonClasses = new ClassBuilder();
+
+    RenderFragment GetIcon()
+    {
+        return Type switch
+        {
+            ButtonType.Add =>@<i class="fa-solid fa-plus fa-fw fa-xl"></i>,
+            ButtonType.Remove => @<i class="fa-solid fa-trash fa-fw fa-lg"></i>,
+            ButtonType.Save => @<i class="fa-solid fa-floppy-disk fa-fw fa-xl"></i>,
+            ButtonType.Edit => @<i class="fa-solid fa-pen fa-fw fa-lg"></i>,
+            ButtonType.Refresh => @<i class="fa-solid fa-arrow-rotate-right fa-fw fa-lg"></i>,
+            ButtonType.Link => @<i class="fa-solid fa-link fa-fw fa-lg"></i>,
+            ButtonType.Help => @<i class="fa-solid fa-question fa-fw fa-lg"></i>,
+            ButtonType.Search => @<i class="fa-solid fa-magnifying-glass fa-fw fa-lg"></i>,
+            ButtonType.Favorite => @<i class="fa-solid fa-star fa-fw fa-lg"></i>,
+            _ => @<i class="fa-solid fa-plus fa-fw fa-lg"></i>,
+        };
+    }
+
+    #endregion
+
+    #region Event Handlers
 
     private Task ButtonClicked(EventArgs args)
     {
-        this.OnClick?.Invoke(this);
+        if (Enabled)
+            this.OnClick?.Invoke(this);
 
         return Task.CompletedTask;
     }
+
+    #endregion
+
+    #region Overrides
 
     protected override void OnParametersSet()
     {
@@ -53,20 +90,5 @@
         base.OnParametersSet();
     }
 
-    RenderFragment GetIcon()
-    {
-        return Type switch
-        {
-            ButtonType.Add =>@<i class="fa-solid fa-plus fa-fw fa-xl"></i>,
-            ButtonType.Remove => @<i class="fa-solid fa-trash fa-fw fa-lg"></i>,
-            ButtonType.Save => @<i class="fa-solid fa-floppy-disk fa-fw fa-xl"></i>,
-            ButtonType.Edit => @<i class="fa-solid fa-pen fa-fw fa-lg"></i>,
-            ButtonType.Refresh => @<i class="fa-solid fa-arrow-rotate-right fa-fw fa-lg"></i>,
-            ButtonType.Link => @<i class="fa-solid fa-link fa-fw fa-lg"></i>,
-            ButtonType.Help => @<i class="fa-solid fa-question fa-fw fa-lg"></i>,
-            ButtonType.Search => @<i class="fa-solid fa-magnifying-glass fa-fw fa-lg"></i>,
-            ButtonType.Favorite => @<i class="fa-solid fa-star fa-fw fa-lg"></i>,
-            _ => @<i class="fa-solid fa-plus fa-fw fa-lg"></i>,
-        };
-    }
+    #endregion
 }

@@ -28,6 +28,10 @@
 .tb-action-button ::deep > i {
   margin: auto;
 }
+.tb-action-button:disabled {
+  pointer-events: none;
+  filter: grayscale(80%);
+}
 
 .tb-action-button-primary {
   background-color: #1B6EC2;

@@ -28,6 +28,11 @@
     ::deep > i {
         margin: auto;
     }
+
+    &:disabled {
+        pointer-events: none;
+        filter: grayscale(80%);
+    }
 }
 
 @each $key, $val in $color-map {
