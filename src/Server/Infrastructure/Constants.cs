@@ -20,7 +20,7 @@ public static class Constants
     {
         public static class Policies
         {
-            public const string GearItemOwner = nameof(GearItemOwner);
+            public const string GetListOwner = nameof(GetListOwner);
         }
     }
 }

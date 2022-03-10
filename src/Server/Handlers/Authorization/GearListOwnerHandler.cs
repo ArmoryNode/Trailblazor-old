@@ -4,11 +4,11 @@ using Trailblazor.Shared.ViewModels;
 
 namespace Trailblazor.Server.Handlers.Authorization
 {
-    public class GearItemOwnerHandler : AuthorizationHandler<GearItemOwnerRequirement, GearItemViewModel>
+    public class GearListOwnerHandler : AuthorizationHandler<GearItemOwnerRequirement, GearListViewModel>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
                                                        GearItemOwnerRequirement requirement,
-                                                       GearItemViewModel resource)
+                                                       GearListViewModel resource)
         {
             // This policy should not be used in an anonymous context, but this is here just in case.
             if (context.User.Identity!.IsAuthenticated)

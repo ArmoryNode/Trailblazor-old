@@ -1,6 +1,7 @@
 ﻿@page "/gear"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Trailblazor.Shared.ViewModels
+@using Trailblazor.Shared.Models
 @inject HttpClient Http
 @inject IJSRuntime jsRuntime
 @*@attribute [Authorize]*@
@@ -8,6 +9,7 @@
 <h3>Gear</h3>
 
 <button type="button" class="btn btn-primary" @onclick="OnClick">Click me!</button>
+<button type="button" class="btn btn-primary" @onclick="SeedItem">Seed Item</button>
 
 @if (GearItems is null || GearItems.Count == 0)
 {
@@ -51,13 +53,13 @@ else
 @code {
     private Window? Window { get; set; }
 
-    public List<GearItemViewModel> GearItems { get; set; } = new();
+    public List<GearListViewModel> GearItems { get; set; } = new();
 
     private async Task OnClick()
     {
         try
         {
-            var fetchedGearItems = await Http.GetFromJsonAsync<IEnumerable<GearItemViewModel>>("/api/GearItem");
+            var fetchedGearItems = await Http.GetFromJsonAsync<IEnumerable<GearListViewModel>>("/api/GearList");
 
             if (fetchedGearItems is not null)
             {
@@ -74,6 +76,51 @@ else
         }
     }
 
+    private async Task SeedItem()
+    {
+        try
+        {
+            var newItem = new GearListViewModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "Seeded Item",
+                Description = "This is a test item",
+                OwnerId = Guid.Parse("b7838c4c-2b5c-4fb7-a93b-711229cfa509"),
+                OwnerName = "ArmoryNode",
+                Created = DateTimeOffset.Now,
+                LastModified = DateTimeOffset.Now,
+                Categories = new List<Category>()
+                {
+                    new()
+                    {
+                        Title = "Category", 
+                        SortOrder = 0,
+                        GearItems = new List<GearItem>
+                        {
+                            new()
+                            {
+                                Id = Guid.NewGuid(),
+                                Name = "Gear Item 1",
+                                Description = "Gear Item 1 Description",
+                                Quantity = 1,
+                                Weight = new()
+                                {
+                                    Amount = 1,
+                                    Unit = WeightUnit.Pounds
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            await Http.PostAsJsonAsync("/api/GearList", newItem);
+        }
+        catch (AccessTokenNotAvailableException accessTokenException)
+        {
+            accessTokenException.Redirect();
+        }
+    }
     //private ValueTask OpenItemLink(string link)
     //{
     //    return jsRuntime.InvokeVoidAsync("open", link, "_blank");

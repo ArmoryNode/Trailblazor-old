@@ -13,9 +13,11 @@ namespace Trailblazor.Shared.Services
 {
     public interface IDataService<TViewModel>
     {
-        Task<IEnumerable<TViewModel>> GetAll(CancellationToken cancellationToken);
-        Task<TViewModel?> GetById(string objectId, CancellationToken cancellationToken);
-        Task<bool> Upsert(TViewModel viewModel, CancellationToken cancellationToken);
+        Task<IEnumerable<TViewModel>> GetAll(DataServiceQueryOptions queryOptions, CancellationToken cancellationToken);
+        Task<TViewModel?> GetById(Guid objectId, CancellationToken cancellationToken);
+        //Task<bool> Upsert(TViewModel viewModel, CancellationToken cancellationToken);
+        Task<bool> Insert(TViewModel viewModel, CancellationToken cancellationToken);
+        Task<bool> Update(TViewModel viewModel, CancellationToken cancellationToken);
         Task<bool> Remove(TViewModel viewModel, CancellationToken cancellationToken);
     }
 }
