@@ -40,14 +40,10 @@ namespace Trailblazor.Server.Services
                     });
 
                 if (queryOptions.OwnerId is Guid ownerId)
-                {
                     query = query.Where(g => g.OwnerId == ownerId);
-                }
 
                 if (queryOptions.PageNumber is int pageNumber && queryOptions.PageSize is int pageSize)
-                {
                     query = query.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
-                }
 
                 return await query.ToListAsync(cancellationToken);
             }
@@ -58,28 +54,33 @@ namespace Trailblazor.Server.Services
             }
         }
 
-        public IAsyncEnumerable<GearListViewModel> GetAllAsync(DataServiceQueryOptions queryOptions)
+        public async Task<IEnumerable<GearListViewModel>> GetAllPartial(DataServiceQueryOptions queryOptions, CancellationToken cancellationToken)
         {
             using var _ = _logger.BeginScope($"Querying records {queryOptions}");
-
+            
             try
             {
                 var query = _dataContext.GearLists
-                    .Select(g => g.ToViewModel());
-
-                var foo = query.ToList();
+                    .AsNoTracking()
+                    .Select(g => new GearListViewModel
+                    {
+                        Id = g.Id,
+                        OwnerId = g.OwnerId,
+                        OwnerName = g.OwnerName,
+                        Name = g.Name,
+                        Description = g.Description,
+                        LastModified = g.LastModified,
+                        Created = g.Created,
+                        Deleted = g.Deleted
+                    });
 
                 if (queryOptions.OwnerId is Guid ownerId)
-                {
                     query = query.Where(g => g.OwnerId == ownerId);
-                }
 
                 if (queryOptions.PageNumber is int pageNumber && queryOptions.PageSize is int pageSize)
-                {
                     query = query.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
-                }
 
-                return query.AsAsyncEnumerable();
+                return await query.ToListAsync(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -211,5 +212,6 @@ namespace Trailblazor.Server.Services
                 }
             }
         }
+
     }
 }

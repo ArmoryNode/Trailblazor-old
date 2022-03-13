@@ -25,13 +25,11 @@ namespace Trailblazor.Server.Controllers
         [HttpGet]
         public async ValueTask<IActionResult> GetAllGearLists(CancellationToken cancellationToken)
         {
-            var service = (GearListService)_gearListService;
-
             var userGearList = new List<GearListViewModel>();
 
             var queryOptions = new DataServiceQueryOptions { OwnerId = User.GetUserId<Guid>() };
 
-            foreach (var gearItem in await service.GetAll(queryOptions, cancellationToken))
+            foreach (var gearItem in await _gearListService.GetAllPartial(queryOptions, cancellationToken))
             {
                 var authorizationResult = await _authorizationService.AuthorizeAsync(User, gearItem, Policies.GetListOwner);
 

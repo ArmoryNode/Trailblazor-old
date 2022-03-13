@@ -11,6 +11,5 @@ namespace Trailblazor.Shared.Services
         public int? PageNumber { get; init; }
         public int? PageSize { get; init; }
         public bool IncludeDeleted { get; init; }
-        public bool Simple { get; init; }
     }
 }

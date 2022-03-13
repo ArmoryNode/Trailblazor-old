@@ -38,8 +38,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configure and register Trailblazor DbContext
 var trailblazorDbOptions = builder.Configuration.GetSection(nameof(CosmosDbSettings)).Get<CosmosDbSettings>();
+
 builder.Services.AddDbContext<TrailblazorDbContext>(options =>
     options.UseCosmos(trailblazorDbOptions.ConnectionString, trailblazorDbOptions.DatabaseName)
+        .LogTo(System.Console.WriteLine)
 );
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -100,6 +102,10 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+//// Make sure the database is created
+//var trailblazorDbContext = app.Services.GetRequiredService<TrailblazorDbContext>();
+//await trailblazorDbContext.Database.EnsureCreatedAsync();
 
 app.UseHttpsRedirection();
 
