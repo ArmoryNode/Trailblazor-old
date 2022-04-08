@@ -47,3 +47,46 @@
         17px 33.9px 42.7px -2.1px rgba($color, 0.34),
         25px 50px 62.9px -2.5px rgba($color, 0.34);
 }
+
+/// FontAwesome ///
+
+// Pro Base
+@mixin fa-pro {
+    font-family: "Font Awesome 6 Pro";
+}
+
+// Solid
+@mixin fas {
+    @include fa-pro;
+    font-weight: 900;
+}
+
+// Regular
+@mixin far {
+    @include fa-pro;
+    font-weight: 400;
+}
+
+// Light
+@mixin fal {
+    @include fa-pro;
+    font-weight: 300;
+}
+
+// Duotone
+@mixin fad {
+    font-family: "Font Awesome 6 Duotone";
+    font-weight: 900;
+}
+
+// Brands
+@mixin fab {
+    font-family: "Font Awesome 6 Brands";
+    font-weight: 400;
+}
+
+// Uploaded Icons
+@mixin fak {
+    font-family: "Font Awesome Kit";
+    font-weight: 400;
+}

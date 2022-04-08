@@ -4,6 +4,7 @@
 @using Trailblazor.Shared.Models
 @inject HttpClient Http
 @inject IJSRuntime jsRuntime
+@inject ILogger<Gear> logger
 @*@attribute [Authorize]*@
 
 <h3>Gear</h3>
@@ -37,7 +38,11 @@ else
 
 <button type="button" class="btn btn-success" @onclick="() => Window!.Toggle()">Open Window</button>
 
-<Window Title="Window" @ref="Window" Top="50vh" Left="50vw" Width="600" Height="400">
+<DropdownList TItemType="string" DataSource="Items" @ref="DropdownList">
+</DropdownList>
+
+
+<Window Title="Window" @ref="Window" Top="50vh" Left="50vw" Width="600" Height="400" Closed="true">
     <WindowContent>
         <div class="container p-4">
             <div class="form-row">
@@ -51,7 +56,19 @@ else
 </Window>
 
 @code {
+    public List<string> Items { get; set; } = new()
+    {
+            "Item 1",
+            "Item 2",
+            "Item 3",
+            "Item 4",
+            "Item 5",
+            "Item 6",
+        };
+
     private Window? Window { get; set; }
+
+    private DropdownList<string> DropdownList { get; set; } = new();
 
     public List<GearListViewModel> GearItems { get; set; } = new();
 
@@ -90,13 +107,13 @@ else
                 Created = DateTimeOffset.Now,
                 LastModified = DateTimeOffset.Now,
                 Categories = new List<Category>()
-                {
+{
                     new()
                     {
-                        Title = "Category", 
+                        Title = "Category",
                         SortOrder = 0,
                         GearItems = new List<GearItem>
-                        {
+{
                             new()
                             {
                                 Id = Guid.NewGuid(),
@@ -121,8 +138,17 @@ else
             accessTokenException.Redirect();
         }
     }
-    //private ValueTask OpenItemLink(string link)
-    //{
-    //    return jsRuntime.InvokeVoidAsync("open", link, "_blank");
-    //}
+
+    protected override void OnParametersSet()
+    {
+        DropdownList.DropdownClicked += (sender, _) =>
+        {
+            Console.WriteLine("Dropdown Clicked");
+        };
+
+        DropdownList.ItemSelected += (sender, _) =>
+        {
+            Console.WriteLine("Item Selected");
+        };
+    }
 }

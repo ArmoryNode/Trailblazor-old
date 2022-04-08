@@ -1,0 +1,145 @@
+﻿@typeparam TItemType
+
+<div class="tb-dropdown-list @_dropdownClasses.Build" style="--dropdown-width: @_width">
+    <div class="tb-dropdown-list-topbar" @onclick="OnDropdownClicked">
+        <div class="tb-dropdown-list-topbar-content">
+            @if (CurrentItem is not null)
+            {
+                if (SelectedItemTemplate is not null)
+                {
+                    @SelectedItemTemplate.Invoke(CurrentItem)
+                }
+                else
+                {
+                    @CurrentItem
+                }
+            }
+            else
+            {
+                @Placeholder
+            }
+        </div>
+    </div>
+    <ul class="tb-dropdown-list-body">
+        @foreach (var item in DataSource)
+        {
+            <li class="tb-dropdown-list-item @ItemIsSelected(item)" @onclick="(args) => OnItemSelected(args, item)">
+                @if (ListItemTemplate is not null)
+                {
+                    @ListItemTemplate.Invoke(item)
+                }
+                else
+                {
+                    @item
+                }
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+    #region Configuration
+
+    [Parameter]
+    public List<TItemType> DataSource { get; set; } = new(0);
+
+    [Parameter]
+    public TItemType? CurrentItem { get; set; } = default;
+
+    [Parameter]
+    public string Placeholder { get; set; } = "Select an item";
+
+    [Parameter]
+    public RenderFragment<TItemType>? SelectedItemTemplate { get; init; } = null;
+
+    [Parameter]
+    public RenderFragment<TItemType>? ListItemTemplate { get; init; } = null;
+
+    private bool _opened = false;
+    [Parameter]
+    public bool Opened
+    {
+        get => _opened;
+        set
+        {
+            if (value)
+                _dropdownClasses.AddClass("tb-dropdown-list-opened");
+            else
+                _dropdownClasses.RemoveClass("tb-dropdown-list-opened");
+
+            _opened = value;
+        }
+    }
+
+    [Parameter]
+    public bool Nullable { get; set; } = false;
+
+    private string _width = "200px";
+    [Parameter]
+    public int Width
+    {
+        get => int.Parse(_width.Replace("px", string.Empty));
+        set
+        {
+            _width = $"{value}px";
+        }
+    }
+
+    #endregion
+
+    #region Internal
+
+    private readonly ClassBuilder _dropdownClasses = new ClassBuilder();
+
+    private string ItemIsSelected(TItemType item)
+    {
+        if (CurrentItem is not null)
+            return CurrentItem.Equals(item) ? "tb-dropdown-list-item-selected" : string.Empty;
+
+        return string.Empty;
+    }
+
+    #endregion
+
+    #region Events
+
+    public event EventHandler<bool>? DropdownClicked;
+    public event EventHandler<TItemType>? ItemSelected;
+
+    #endregion
+
+    #region Event Handlers
+
+    private void OnDropdownClicked(MouseEventArgs args)
+    {
+        Opened = !Opened;
+
+        if (Opened)
+            _dropdownClasses.AddClass("tb-dropdown-list-opened");
+        else
+            _dropdownClasses.RemoveClass("tb-dropdown-list-opened");
+
+        DropdownClicked?.Invoke(this, Opened);
+    }
+
+    private void OnItemSelected(MouseEventArgs args, TItemType item)
+    {
+        CurrentItem = item;
+        ItemSelected?.Invoke(this, item);
+        Opened = false;
+    }
+
+    #endregion
+
+    #region Overrides
+
+    protected override void OnParametersSet()
+    {
+        if (Opened)
+            _dropdownClasses.AddClass("tb-dropdown-list-opened");
+
+        base.OnParametersSet();
+    }
+
+    #endregion
+}

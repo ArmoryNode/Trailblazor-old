@@ -1,0 +1,90 @@
+﻿@import "../../Styles/_all";
+
+$main-color: $grey;
+$item-color: darken($grey, 2);
+$active-color: lighten($grey, 2);
+
+.tb-dropdown-list {
+    // --dropdown-width: 200px;
+    --dropdown-height: 42px;
+    --x-padding: 12px;
+    --y-padding: 8px;
+    position: relative;
+    // The main area of the control when it is collapsed
+    .tb-dropdown-list-topbar {
+        --indicator-width: 10px;
+        position: relative;
+        display: flex;
+        width: var(--dropdown-width);
+        height: var(--dropdown-height);
+        padding: var(--y-padding) var(--x-padding);
+        background-color: $main-color;
+        cursor: pointer;
+
+        @include transition-for(background-color);
+
+        &::after {
+            content: '\f0d7';
+            position: absolute;
+            right: var(--x-padding);
+            transform: rotate(0deg);
+
+            @include fas;
+            @include fast-transition-for(transform);
+        }
+
+        .tb-dropdown-list-topbar-content {
+            position: relative;
+            width: calc(100% - var(--indicator-width) - var(--x-padding));
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        &:hover {
+            background-color: $active-color;
+        }
+    }
+    // The list area of the control
+    ul.tb-dropdown-list-body {
+        position: relative;
+        width: var(--dropdown-width);
+        max-height: 0;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+        @include transition-for(max-height);
+
+        li.tb-dropdown-list-item {
+            height: var(--dropdown-height);
+            padding: var(--y-padding) var(--x-padding);
+            background-color: $item-color;
+            cursor: pointer;
+            @include transition-for(background-color);
+
+            &:hover {
+                background-color: $main-color;
+            }
+
+            &.tb-dropdown-list-item-selected {
+                background-color: $active-color;
+            }
+        }
+    }
+    // Styles to apply when the dropdown is opened
+    &.tb-dropdown-list-opened {
+        .tb-dropdown-list-topbar {
+            background-color: $active-color;
+
+            &::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        .tb-dropdown-list-body {
+            max-height: calc(var(--dropdown-height) * 5);
+        }
+    }
+}

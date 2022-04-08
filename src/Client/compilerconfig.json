@@ -47,5 +47,9 @@
     "minify": {
       "enabled": false
     }
+  },
+  {
+    "outputFile": "Shared/Components/DropdownList.razor.css",
+    "inputFile": "Shared/Components/DropdownList.razor.scss"
   }
 ]
