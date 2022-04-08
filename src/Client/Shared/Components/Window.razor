@@ -140,7 +140,7 @@
     {
         if (Draggable)
         {
-            var windowElement = await _jsModule!.InvokeAsync<ElementReference>("topbarMouseDown", new object[] { args, WindowContainer! });
+            var windowElement = await _jsModule!.InvokeAsync<IJSObjectReference>("topbarMouseDown", new object[] { args, WindowContainer! });
         }
     }
 
