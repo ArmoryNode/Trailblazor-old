@@ -45,31 +45,41 @@ $active-color: lighten($grey, 2);
         &:hover {
             background-color: $active-color;
         }
+
+        .tb-dropdown-list-placeholder {
+            font-style: italic;
+        }
     }
     // The list area of the control
-    ul.tb-dropdown-list-body {
-        position: relative;
-        width: var(--dropdown-width);
+    .tb-dropdown-list-body-container {
+        white-space: nowrap;
+        overflow-y: hidden;
         max-height: 0;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        overflow-y: auto;
         @include transition-for(max-height);
 
-        li.tb-dropdown-list-item {
-            height: var(--dropdown-height);
-            padding: var(--y-padding) var(--x-padding);
-            background-color: $item-color;
-            cursor: pointer;
-            @include transition-for(background-color);
+        ul.tb-dropdown-list-body {
+            position: relative;
+            width: var(--dropdown-width);
+            max-height: calc(var(--dropdown-height) * 5);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
 
-            &:hover {
-                background-color: $main-color;
-            }
+            li.tb-dropdown-list-item {
+                height: var(--dropdown-height);
+                padding: var(--y-padding) var(--x-padding);
+                background-color: $item-color;
+                cursor: pointer;
+                @include transition-for(background-color);
 
-            &.tb-dropdown-list-item-selected {
-                background-color: $active-color;
+                &:hover {
+                    background-color: $main-color;
+                }
+
+                &.tb-dropdown-list-item-selected {
+                    background-color: $active-color;
+                }
             }
         }
     }
@@ -83,8 +93,11 @@ $active-color: lighten($grey, 2);
             }
         }
 
-        .tb-dropdown-list-body {
+        .tb-dropdown-list-body-container {
             max-height: calc(var(--dropdown-height) * 5);
+
+            ul.tb-dropdown-list-body {
+            }
         }
     }
 }

@@ -3,38 +3,40 @@
 <div class="tb-dropdown-list @_dropdownClasses.Build" style="--dropdown-width: @_width">
     <div class="tb-dropdown-list-topbar" @onclick="OnDropdownClicked">
         <div class="tb-dropdown-list-topbar-content">
-            @if (CurrentItem is not null)
+            @if (Value is not null)
             {
                 if (SelectedItemTemplate is not null)
                 {
-                    @SelectedItemTemplate.Invoke(CurrentItem)
+                    @SelectedItemTemplate.Invoke(Value)
                 }
                 else
                 {
-                    @CurrentItem
+                    @Value
                 }
             }
             else
             {
-                @Placeholder
+                <span class="tb-dropdown-list-placeholder">@Placeholder</span>
             }
         </div>
     </div>
-    <ul class="tb-dropdown-list-body">
-        @foreach (var item in DataSource)
-        {
-            <li class="tb-dropdown-list-item @ItemIsSelected(item)" @onclick="(args) => OnItemSelected(args, item)">
-                @if (ListItemTemplate is not null)
-                {
-                    @ListItemTemplate.Invoke(item)
-                }
-                else
-                {
-                    @item
-                }
-            </li>
-        }
-    </ul>
+    <div class="tb-dropdown-list-body-container">
+        <ul class="tb-dropdown-list-body">
+            @foreach (var item in DataSource)
+            {
+                <li class="tb-dropdown-list-item @ItemIsSelected(item)" @onclick="(args) => OnItemSelected(args, item)">
+                    @if (ListItemTemplate is not null)
+                    {
+                        @ListItemTemplate.Invoke(item)
+                    }
+                    else
+                    {
+                        @item
+                    }
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 
 @code {
@@ -44,7 +46,7 @@
     public List<TItemType> DataSource { get; set; } = new(0);
 
     [Parameter]
-    public TItemType? CurrentItem { get; set; } = default;
+    public TItemType? Value { get; set; } = default;
 
     [Parameter]
     public string Placeholder { get; set; } = "Select an item";
@@ -93,8 +95,8 @@
 
     private string ItemIsSelected(TItemType item)
     {
-        if (CurrentItem is not null)
-            return CurrentItem.Equals(item) ? "tb-dropdown-list-item-selected" : string.Empty;
+        if (Value is not null)
+            return Value.Equals(item) ? "tb-dropdown-list-item-selected" : string.Empty;
 
         return string.Empty;
     }
@@ -124,7 +126,7 @@
 
     private void OnItemSelected(MouseEventArgs args, TItemType item)
     {
-        CurrentItem = item;
+        Value = item;
         ItemSelected?.Invoke(this, item);
         Opened = false;
     }

@@ -38,7 +38,11 @@ else
 
 <button type="button" class="btn btn-success" @onclick="() => Window!.Toggle()">Open Window</button>
 
-<DropdownList TItemType="string" DataSource="Items" @ref="DropdownList">
+<DropdownList TItemType="string"
+              DataSource="Items"
+              Width="80"
+              Placeholder="Unit"
+              @ref="DropdownList">
 </DropdownList>
 
 
@@ -58,13 +62,11 @@ else
 @code {
     public List<string> Items { get; set; } = new()
     {
-            "Item 1",
-            "Item 2",
-            "Item 3",
-            "Item 4",
-            "Item 5",
-            "Item 6",
-        };
+        "lbs",
+        "oz",
+        "g",
+        "kg",
+    };
 
     private Window? Window { get; set; }
 
@@ -137,18 +139,5 @@ else
         {
             accessTokenException.Redirect();
         }
-    }
-
-    protected override void OnParametersSet()
-    {
-        DropdownList.DropdownClicked += (sender, _) =>
-        {
-            Console.WriteLine("Dropdown Clicked");
-        };
-
-        DropdownList.ItemSelected += (sender, _) =>
-        {
-            Console.WriteLine("Item Selected");
-        };
     }
 }

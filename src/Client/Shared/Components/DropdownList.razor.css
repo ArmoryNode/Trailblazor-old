@@ -39,19 +39,27 @@
 .tb-dropdown-list .tb-dropdown-list-topbar:hover {
   background-color: #424244;
 }
-.tb-dropdown-list ul.tb-dropdown-list-body {
-  position: relative;
-  width: var(--dropdown-width);
+.tb-dropdown-list .tb-dropdown-list-topbar .tb-dropdown-list-placeholder {
+  font-style: italic;
+}
+.tb-dropdown-list .tb-dropdown-list-body-container {
+  white-space: nowrap;
+  overflow-y: hidden;
   max-height: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
   transition-duration: 0.3s;
   transition-timing-function: ease;
   transition-property: max-height;
 }
-.tb-dropdown-list ul.tb-dropdown-list-body li.tb-dropdown-list-item {
+.tb-dropdown-list .tb-dropdown-list-body-container ul.tb-dropdown-list-body {
+  position: relative;
+  width: var(--dropdown-width);
+  max-height: calc(var(--dropdown-height) * 5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+.tb-dropdown-list .tb-dropdown-list-body-container ul.tb-dropdown-list-body li.tb-dropdown-list-item {
   height: var(--dropdown-height);
   padding: var(--y-padding) var(--x-padding);
   background-color: #38383a;
@@ -60,10 +68,10 @@
   transition-timing-function: ease;
   transition-property: background-color;
 }
-.tb-dropdown-list ul.tb-dropdown-list-body li.tb-dropdown-list-item:hover {
+.tb-dropdown-list .tb-dropdown-list-body-container ul.tb-dropdown-list-body li.tb-dropdown-list-item:hover {
   background-color: #3D3D3F;
 }
-.tb-dropdown-list ul.tb-dropdown-list-body li.tb-dropdown-list-item.tb-dropdown-list-item-selected {
+.tb-dropdown-list .tb-dropdown-list-body-container ul.tb-dropdown-list-body li.tb-dropdown-list-item.tb-dropdown-list-item-selected {
   background-color: #424244;
 }
 .tb-dropdown-list.tb-dropdown-list-opened .tb-dropdown-list-topbar {
@@ -72,6 +80,6 @@
 .tb-dropdown-list.tb-dropdown-list-opened .tb-dropdown-list-topbar::after {
   transform: rotate(180deg);
 }
-.tb-dropdown-list.tb-dropdown-list-opened .tb-dropdown-list-body {
+.tb-dropdown-list.tb-dropdown-list-opened .tb-dropdown-list-body-container {
   max-height: calc(var(--dropdown-height) * 5);
 }
