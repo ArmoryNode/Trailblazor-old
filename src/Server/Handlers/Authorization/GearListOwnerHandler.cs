@@ -6,6 +6,13 @@ namespace Trailblazor.Server.Handlers.Authorization
 {
     public class GearListOwnerHandler : AuthorizationHandler<GearItemOwnerRequirement, GearListViewModel>
     {
+        private readonly ILogger<GearListOwnerHandler> _logger;
+
+        public GearListOwnerHandler(ILogger<GearListOwnerHandler> logger)
+        {
+            _logger = logger;
+        }
+
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
                                                        GearItemOwnerRequirement requirement,
                                                        GearListViewModel resource)
@@ -16,6 +23,10 @@ namespace Trailblazor.Server.Handlers.Authorization
                 if (context.User.GetUserId<Guid>() == resource.OwnerId)
                 {
                     context.Succeed(requirement);
+                }
+                else
+                {
+                    _logger.LogInformation("User {userId} attempted to modify a record they do not have access to. [documentId: {documentId}, ownerId: {ownerId}]", context.User.UserId(), resource.Id, resource.OwnerId);
                 }
             }
 

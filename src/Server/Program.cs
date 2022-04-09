@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Formatting.Compact;
 using Trailblazor.Server.Data;
 using Trailblazor.Server.Handlers.Authorization;
 
@@ -19,16 +20,15 @@ using static Trailblazor.Shared.Infrastructure.Authentication;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure logging
-//Log.Logger = new LoggerConfiguration()
-//    .Enrich.FromLogContext()
-//    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
-//    .CreateLogger();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
-//builder.WebHost.ConfigureLogging(logging =>
-//{
-//    logging.ClearProviders();
-//    logging.AddSerilog();
-//});
+builder.WebHost.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddSerilog();
+});
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -103,7 +103,7 @@ else
     app.UseHsts();
 }
 
-//// Make sure the database is created
+// Make sure the database is created
 //var trailblazorDbContext = app.Services.GetRequiredService<TrailblazorDbContext>();
 //await trailblazorDbContext.Database.EnsureCreatedAsync();
 
