@@ -6,7 +6,6 @@ $item-color: darken($grey, 2);
 $active-color: lighten($grey, 2);
 
 .tb-dropdown-list {
-    // --dropdown-width: 200px;
     --dropdown-height: 42px;
     --x-padding: 12px;
     --y-padding: 8px;
@@ -85,12 +84,6 @@ $active-color: lighten($grey, 2);
                 &.tb-dropdown-list-item-selected {
                     background-color: $active-color;
                 }
-
-                //@for $i from 1 through 20 {
-                //   &:nth-of-type(#{$i}) {
-                //        animation-delay: #{calc($i * .01)}s;
-                //    }
-                //}
             }
         }
     }
