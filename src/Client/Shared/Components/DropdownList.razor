@@ -1,7 +1,7 @@
 ﻿@typeparam TItemType
 
-<div class="tb-dropdown-list @_dropdownClasses.Build" style="--dropdown-width: @_width">
-    <div class="tb-dropdown-list-topbar" @onclick="OnDropdownClicked">
+<div class="tb-dropdown-list @_dropdownClasses.Build" style="--dropdown-width: @_width" data-componentid="@_componentId">
+    <div class="tb-dropdown-list-topbar" @onclick:stopPropagation="true" @onclick="OnDropdownClicked">
         <div class="tb-dropdown-list-topbar-content">
             @if (Value is not null)
             {
@@ -24,7 +24,7 @@
         <ul class="tb-dropdown-list-body">
             @foreach (var item in DataSource)
             {
-                <li class="tb-dropdown-list-item @ItemIsSelected(item)" @onclick="(args) => OnItemSelected(args, item)">
+                <li class="tb-dropdown-list-item @ItemIsSelected(item)" @onclick="async (args) => await OnItemSelected(args, item)">
                     @if (ListItemTemplate is not null)
                     {
                         @ListItemTemplate.Invoke(item)
@@ -43,10 +43,13 @@
     #region Configuration
 
     [Parameter]
-    public List<TItemType> DataSource { get; set; } = new(0);
+    public ICollection<TItemType> DataSource { get; set; } = new List<TItemType>(0);
 
     [Parameter]
     public TItemType? Value { get; set; } = default;
+
+    [Parameter]
+    public EventCallback<TItemType> ValueChanged { get; set; }
 
     [Parameter]
     public string Placeholder { get; set; } = "Select an item";
@@ -65,16 +68,13 @@
         set
         {
             if (value)
-                _dropdownClasses.AddClass("tb-dropdown-list-opened");
+                _dropdownClasses.AddClass(_dropdownOpenedClass);
             else
-                _dropdownClasses.RemoveClass("tb-dropdown-list-opened");
+                _dropdownClasses.RemoveClass(_dropdownOpenedClass);
 
             _opened = value;
         }
     }
-
-    [Parameter]
-    public bool Nullable { get; set; } = false;
 
     private string _width = "200px";
     [Parameter]
@@ -91,12 +91,17 @@
 
     #region Internal
 
+    private readonly Guid _componentId = Guid.NewGuid();
+
+    private const string _dropdownItemSelectedClass = "tb-dropdown-list-item-selected";
+    private const string _dropdownOpenedClass = "tb-dropdown-list-opened";
+
     private readonly ClassBuilder _dropdownClasses = new ClassBuilder();
 
     private string ItemIsSelected(TItemType item)
     {
         if (Value is not null)
-            return Value.Equals(item) ? "tb-dropdown-list-item-selected" : string.Empty;
+            return Value.Equals(item) ? _dropdownItemSelectedClass : string.Empty;
 
         return string.Empty;
     }
@@ -117,16 +122,16 @@
         Opened = !Opened;
 
         if (Opened)
-            _dropdownClasses.AddClass("tb-dropdown-list-opened");
+            _dropdownClasses.AddClass(_dropdownOpenedClass);
         else
-            _dropdownClasses.RemoveClass("tb-dropdown-list-opened");
+            _dropdownClasses.RemoveClass(_dropdownOpenedClass);
 
         DropdownClicked?.Invoke(this, Opened);
     }
 
-    private void OnItemSelected(MouseEventArgs args, TItemType item)
+    private async Task OnItemSelected(MouseEventArgs args, TItemType item)
     {
-        Value = item;
+        await ValueChanged.InvokeAsync(item);
         ItemSelected?.Invoke(this, item);
         Opened = false;
     }
@@ -138,7 +143,7 @@
     protected override void OnParametersSet()
     {
         if (Opened)
-            _dropdownClasses.AddClass("tb-dropdown-list-opened");
+            _dropdownClasses.AddClass(_dropdownOpenedClass);
 
         base.OnParametersSet();
     }
