@@ -17,7 +17,7 @@ namespace Trailblazor.Server.Models.Data
         {
             return this with
             {
-                Id = viewModel.Id,  
+                Id = viewModel.Id,
                 Name = viewModel.Name,
                 Description = viewModel.Description,
                 Categories = viewModel.Categories.ToList(),
@@ -40,7 +40,7 @@ namespace Trailblazor.Server.Models.Data
 
         // NOTE: Be mindful when using this in EF Core queries. This bypasses projections.
         public GearListViewModel ToViewModel()
-        {   
+        {
             return new GearListViewModel
             {
                 Id = Id,

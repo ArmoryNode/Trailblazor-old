@@ -1,43 +1,48 @@
 ﻿@typeparam TItemType
 
-<div class="tb-dropdown-list @_dropdownClasses.Build" style="--dropdown-width: @_width" data-componentid="@_componentId">
-    <div class="tb-dropdown-list-topbar" @onclick:stopPropagation="true" @onclick="OnDropdownClicked">
-        <div class="tb-dropdown-list-topbar-content">
-            @if (Value is not null)
-            {
-                if (SelectedItemTemplate is not null)
+@inherits BaseComponent
+
+@if (Visible)
+{
+    <div class="tb-dropdown-list @_dropdownClasses.Build" style="--dropdown-width: @_width" data-componentid="@_componentId">
+        <div class="tb-dropdown-list-topbar" @onclick:stopPropagation="true" @onclick="OnDropdownClicked">
+            <div class="tb-dropdown-list-topbar-content">
+                @if (Value is not null)
                 {
-                    @SelectedItemTemplate.Invoke(Value)
-                }
-                else
-                {
-                    @Value
-                }
-            }
-            else
-            {
-                <span class="tb-dropdown-list-placeholder">@Placeholder</span>
-            }
-        </div>
-    </div>
-    <div class="tb-dropdown-list-body-container">
-        <ul class="tb-dropdown-list-body">
-            @foreach (var item in DataSource)
-            {
-                <li class="tb-dropdown-list-item @ItemIsSelected(item)" @onclick="async (args) => await OnItemSelected(args, item)">
-                    @if (ListItemTemplate is not null)
+                    if (SelectedItemTemplate is not null)
                     {
-                        @ListItemTemplate.Invoke(item)
+                        @SelectedItemTemplate.Invoke(Value)
                     }
                     else
                     {
-                        @item
+                        @Value
                     }
-                </li>
-            }
-        </ul>
+                }
+                else
+                {
+                    <span class="tb-dropdown-list-placeholder">@Placeholder</span>
+                }
+            </div>
+        </div>
+        <div class="tb-dropdown-list-body-container">
+            <ul class="tb-dropdown-list-body">
+                @foreach (var item in DataSource)
+                {
+                    <li class="tb-dropdown-list-item @ItemIsSelected(item)" @onclick="async (args) => await OnItemSelected(args, item)">
+                        @if (ListItemTemplate is not null)
+                        {
+                            @ListItemTemplate.Invoke(item)
+                        }
+                        else
+                        {
+                            @item
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
-</div>
+}
 
 @code {
     #region Configuration
@@ -91,8 +96,6 @@
 
     #region Internal
 
-    private readonly Guid _componentId = Guid.NewGuid();
-
     private const string _dropdownItemSelectedClass = "tb-dropdown-list-item-selected";
     private const string _dropdownOpenedClass = "tb-dropdown-list-opened";
 
@@ -119,6 +122,9 @@
 
     private void OnDropdownClicked(MouseEventArgs args)
     {
+        if (!Enabled)
+            return;
+
         Opened = !Opened;
 
         if (Opened)
@@ -131,9 +137,18 @@
 
     private async Task OnItemSelected(MouseEventArgs args, TItemType item)
     {
+        if (!Enabled)
+            return;
+
         await ValueChanged.InvokeAsync(item);
         ItemSelected?.Invoke(this, item);
         Opened = false;
+    }
+
+    private void OnEnabledChanged(object? sender, bool value)
+    {
+        if (!Enabled)
+            _dropdownClasses.RemoveClass(_dropdownOpenedClass);
     }
 
     #endregion
@@ -144,6 +159,8 @@
     {
         if (Opened)
             _dropdownClasses.AddClass(_dropdownOpenedClass);
+
+        base.EnabledChanged += OnEnabledChanged;
 
         base.OnParametersSet();
     }

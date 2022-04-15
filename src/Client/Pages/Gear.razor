@@ -4,7 +4,6 @@
 @using Trailblazor.Shared.Models
 @inject HttpClient Http
 @inject IJSRuntime jsRuntime
-@inject ILogger<Gear> logger
 @*@attribute [Authorize]*@
 
 <h3>Gear</h3>
@@ -38,13 +37,17 @@ else
 
 <button type="button" class="btn btn-success" @onclick="() => Window!.Toggle()">Open Window</button>
 
-<DropdownList TItemType="string"
-              DataSource="Items"
-              Width="80"
-              Placeholder="Unit"
-              @ref="DropdownList">
-</DropdownList>
+<div class="mt-3">
+    <DropdownList TItemType="string"
+                  DataSource="Items"
+                  Width="80"
+                  Placeholder="Unit"
+                  @bind-Value="unit"
+                  @ref="DropdownList">
+    </DropdownList>
+</div>
 
+<button class="@btnClasses.Build" @onclick="OnBtnClicked">Enable/Disable Dropdown</button>
 
 <Window Title="Window" @ref="Window" Top="50vh" Left="50vw" Width="600" Height="400" Closed="true">
     <WindowContent>
@@ -60,13 +63,33 @@ else
 </Window>
 
 @code {
+    public ClassBuilder btnClasses = new ClassBuilder("btn btn-success");
+
+    private void OnBtnClicked(MouseEventArgs args)
+    {
+        DropdownList.Enabled = !DropdownList.Enabled;
+        if (DropdownList.Enabled)
+        {
+            btnClasses.AddClass("btn-success");
+            btnClasses.RemoveClass("btn-danger");
+        }
+        else
+        {
+
+            btnClasses.RemoveClass("btn-success");
+            btnClasses.AddClass("btn-danger");
+        }
+    }
+
     public List<string> Items { get; set; } = new()
     {
-        "lbs",
-        "oz",
-        "g",
-        "kg",
-    };
+            "lbs",
+            "oz",
+            "g",
+            "kg",
+        };
+
+    public string? unit = null;
 
     private Window? Window { get; set; }
 

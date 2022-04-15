@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Trailblazor.Server.Models.Data;
 
+#nullable disable
+
 namespace Trailblazor.Server.Data
 {
     public class TrailblazorDbContext : DbContext
     {
-        public DbSet<GearList> GearLists => Set<GearList>();
+        public DbSet<GearList> GearLists { get; set; }
 
         public TrailblazorDbContext(DbContextOptions<TrailblazorDbContext> options)
             : base(options)
@@ -28,7 +30,7 @@ namespace Trailblazor.Server.Data
                 // Configure the "OwnerId" as the partition key for the document and specify a conversion
                 // https://docs.microsoft.com/en-us/ef/core/providers/cosmos/?tabs=dotnet-core-cli#partition-keys
                 g.HasPartitionKey(x => x.OwnerId);
-                //g.Property(x => x.OwnerId).HasConversion<string>();
+                g.Property(x => x.OwnerId).HasConversion<string>();
 
                 // Only return entities that have not been soft deleted by default
                 g.HasQueryFilter(x => x.Deleted == null);
